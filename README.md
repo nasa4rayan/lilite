@@ -97,9 +97,11 @@ Contributions are welcome. You can help by:
 
 Please keep contributions aligned with Lilite’s core behavior: safe, manual command generation only.
 
-## Project Philosophy
+## License
 
-- Simple
-- Transparent
-- Trustworthy
-- Official-repo-focused
+This project is licensed under the MIT License.  
+See [LICENSE](LICENSE) for details.
+
+## Copyright
+
+© 2026 Lilite. All rights reserved.
