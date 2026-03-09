@@ -1,0 +1,20 @@
+import { Moon, Sun } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
+interface ThemeToggleProps {
+  theme: 'light' | 'dark'
+  toggleTheme: () => void
+}
+
+export function ThemeToggle({ theme, toggleTheme }: ThemeToggleProps) {
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+      onClick={toggleTheme}
+    >
+      {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+    </Button>
+  )
+}

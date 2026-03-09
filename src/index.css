@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'IBM Plex Sans', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  --background: 0 0% 99%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --primary: 151 55% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 152 33% 93%;
+  --secondary-foreground: 160 30% 20%;
+  --muted: 150 20% 95%;
+  --muted-foreground: 215 16% 40%;
+  --accent: 152 28% 92%;
+  --accent-foreground: 160 30% 20%;
+  --border: 214 20% 86%;
+  --input: 214 20% 86%;
+  --ring: 151 55% 42%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 222 47% 8%;
+  --foreground: 210 40% 96%;
+  --card: 222 30% 12%;
+  --card-foreground: 210 40% 96%;
+  --primary: 152 60% 48%;
+  --primary-foreground: 155 100% 8%;
+  --secondary: 223 22% 18%;
+  --secondary-foreground: 210 40% 96%;
+  --muted: 223 20% 16%;
+  --muted-foreground: 215 20% 70%;
+  --accent: 223 20% 20%;
+  --accent-foreground: 210 40% 96%;
+  --border: 223 18% 25%;
+  --input: 223 18% 25%;
+  --ring: 152 60% 48%;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: radial-gradient(circle at 8% -18%, hsl(152 60% 70% / 0.2), transparent 42%);
+}
+
+.dark body {
+  background-image: radial-gradient(circle at 8% -18%, hsl(152 65% 26% / 0.16), transparent 40%);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-variant-ligatures: none;
+}
+
+main {
+  @apply animate-[fadeIn_180ms_ease-in-out];
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
