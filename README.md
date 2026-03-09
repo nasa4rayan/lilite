@@ -1,8 +1,8 @@
-<p align="left">
+<p align="center">
   <img src="src/assets/logo.png" alt="Lilite Logo" width="96" />
   <br />
-  <h2>Lilite</h2>
-  <p>A clean Linux command builder inspired by Ninite.</p>
+  <h2 align="center">Lilite</h2>
+  <p align="center">A clean Linux command builder inspired by Ninite.</p>
 </p>
 
 <p align="center">
@@ -14,16 +14,6 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-green" />
   <img alt="Status" src="https://img.shields.io/badge/Status-Active-22c55e" />
 </p>
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Routes](#routes)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Contributing](#contributing)
-- [Project Philosophy](#project-philosophy)
 
 ## Overview
 
