@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Trash2 } from 'lucide-react'
 import { BackButton } from '@/components/BackButton'
 import { categories } from '@/data/constants'
-import { distroInfo, distroPackages, maintenanceCommands } from '@/data/packages'
+import { distroPackages, maintenanceCommands } from '@/data/packages'
 import { usePackageSelection } from '@/hooks/usePackageSelection'
 import { buildInstallCommand } from '@/lib/commandBuilder'
 import { filterPackages } from '@/lib/filterPackages'
@@ -16,6 +16,7 @@ import { PackageCard } from '@/components/PackageCard'
 import { SearchBar } from '@/components/SearchBar'
 import { SectionHeader } from '@/components/SectionHeader'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useLanguage } from '@/hooks/useLanguage'
 import { useSEO } from '@/hooks/useSEO'
 
 interface DistroFamilyPageProps {
@@ -23,6 +24,7 @@ interface DistroFamilyPageProps {
 }
 
 export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
+  const { messages } = useLanguage()
   const [searchTerm, setSearchTerm] = useState('')
   const [activeCategory, setActiveCategory] = useState<Category | 'All'>('All')
   const [showLiliteCommand, setShowLiliteCommand] = useState(false)
@@ -39,8 +41,8 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
   const command = useMemo(() => buildInstallCommand(distro, selectedPackages), [distro, selectedPackages])
 
   useSEO({
-    title: `${distroInfo[distro].title} Package Builder`,
-    description: distroInfo[distro].description,
+    title: `${messages.distroInfo[distro].title} ${messages.distroPage.seoTitleSuffix}`,
+    description: messages.distroInfo[distro].description,
     pathname: `/distro/${distro}`,
   })
 
@@ -58,30 +60,29 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
   return (
     <main className="mx-auto w-full max-w-6xl space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-8">
       <section>
-        <SectionHeader title={distroInfo[distro].title} description={distroInfo[distro].description} action={<BackButton />} as="h1" />
+        <SectionHeader
+          title={messages.distroInfo[distro].title}
+          description={messages.distroInfo[distro].description}
+          action={<BackButton />}
+          as="h1"
+        />
       </section>
 
       <section>
-        <SectionHeader
-          title="System Maintenance Commands"
-          description="Run these maintenance commands before installing additional packages."
-        />
+        <SectionHeader title={messages.distroPage.maintenanceSectionTitle} description={messages.distroPage.maintenanceSectionDescription} />
         <div className="grid gap-3 md:grid-cols-2">
           {maintenanceCommands[distro].map((item) => (
-            <MaintenanceCommandCard key={item.id} title={item.title} command={item.command} />
+            <MaintenanceCommandCard key={item.id} title={messages.distroInfo[distro].maintenanceCardTitle} command={item.command} />
           ))}
         </div>
       </section>
 
       <section>
-        <SectionHeader
-          title="Package Selection"
-          description="Filter package cards, select what you need, then click Get Your Lilite to generate one grouped install command."
-        />
+        <SectionHeader title={messages.distroPage.packageSelectionTitle} description={messages.distroPage.packageSelectionDescription} />
 
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <Badge variant="secondary" className="rounded-md px-3 py-1 text-xs">
-            Selected: {selectedCount}
+            {messages.distroPage.selected}: {selectedCount}
           </Badge>
         </div>
 
@@ -98,28 +99,28 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
           </div>
           {filteredPackages.length === 0 ? (
             <p className="rounded-md border border-dashed bg-card/40 p-3 text-sm text-muted-foreground">
-              No packages match your current search and category filters.
+              {messages.distroPage.noPackagesMatch}
             </p>
           ) : null}
 
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
             <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleClearSelection} disabled={selectedCount === 0}>
               <Trash2 className="mr-2 h-4 w-4" />
-              Clear Selection
+              {messages.distroPage.clearSelection}
             </Button>
             <Button variant="default" size="sm" className="w-full sm:w-auto" onClick={handleGetLilite} disabled={selectedCount === 0}>
-              Get Your Lilite
+              {messages.distroPage.getYourLilite}
             </Button>
           </div>
 
           {showLiliteCommand ? (
             <Card className="mt-3 rounded-xl border bg-card/80 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-base">Your Lilite Command</CardTitle>
+                <CardTitle className="text-base">{messages.distroPage.yourLiliteCommand}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <pre className="min-h-24 overflow-x-auto rounded-md border bg-muted/40 p-3 font-mono text-xs leading-relaxed sm:text-sm">
-                  {liliteCommand || '# Select packages to generate your command'}
+                  {liliteCommand || messages.distroPage.selectPackagesPlaceholder}
                 </pre>
                 <CopyButton text={liliteCommand} disabled={!liliteCommand.trim()} />
               </CardContent>

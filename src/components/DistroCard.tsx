@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useLanguage } from '@/hooks/useLanguage'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface DistroCardProps {
@@ -11,6 +12,8 @@ interface DistroCardProps {
 }
 
 export function DistroCard({ to, title, description, logoSrc, logoAlt }: DistroCardProps) {
+  const { messages } = useLanguage()
+
   return (
     <Link to={to} className="group block">
       <Card className="h-full rounded-2xl border bg-card/80 shadow-sm transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/45 group-hover:shadow-md">
@@ -22,7 +25,7 @@ export function DistroCard({ to, title, description, logoSrc, logoAlt }: DistroC
           <CardDescription className="leading-relaxed">{description}</CardDescription>
         </CardHeader>
         <CardContent className="inline-flex items-center gap-1 p-4 pt-0 text-sm font-medium text-primary sm:p-5 sm:pt-0">
-          Open package builder
+          {messages.common.openPackageBuilder}
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
         </CardContent>
       </Card>

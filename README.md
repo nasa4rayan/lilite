@@ -1,87 +1,105 @@
-# Lilite
+<p align="left">
+  <img src="src/assets/logo.png" alt="Lilite Logo" width="96" />
+  <br />
+  <h2>Lilite</h2>
+  <p>A clean Linux command builder inspired by Ninite.</p>
+</p>
 
-Lilite is a frontend-only Linux command builder inspired by Ninite.
-It helps users generate one safe grouped install command from official repositories.
+<p align="center">
+  <img alt="React" src="https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=FFD62E" />
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white" />
+  <img alt="shadcn/ui" src="https://img.shields.io/badge/shadcn%2Fui-111827?logo=vercel&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-green" />
+  <img alt="Status" src="https://img.shields.io/badge/Status-Active-22c55e" />
+</p>
 
-## Stack
+## Table of Contents
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- shadcn/ui style components (`src/components/ui`)
-- React Router
-- Lucide React Icons
-- Optional helpers: `clsx`, `tailwind-merge`
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Routes](#routes)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
+- [Project Philosophy](#project-philosophy)
+
+## Overview
+
+Lilite is a Linux command builder inspired by Ninite.  
+It helps users generate install commands for common Linux apps and packages across:
+
+<p>
+  <img alt="Arch-based" src="https://img.shields.io/badge/Arch-1793D1?logo=archlinux&logoColor=white" />
+  <img alt="Fedora-based" src="https://img.shields.io/badge/Fedora-51A2DA?logo=fedora&logoColor=white" />
+  <img alt="Debian-based" src="https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white" />
+</p>
+
+> Lilite only generates commands. It never installs software automatically.
+
+## Why Lilite?
+
+- Fast, minimal workflow
+- Transparent command output
+- Official repositories only
+- No scripts, no hidden execution
+
+## Key Features
+
+- Distro family selection
+- Package/app selection UI
+- Live command preview flow
+- One grouped install command output
+- Copy command with one click
+- Official repositories only (no AUR, Snap, Flatpak, COPR, AppImage, or external repos)
 
 ## Routes
 
-- `/` HomePage
-- `/get-started` DistroChooserPage
-- `/distro/arch-based`
-- `/distro/debian-based`
-- `/distro/fedora-based`
-- `*` NotFoundPage
+| Route                  | Purpose              |
+| ---------------------- | -------------------- |
+| `/`                    | Home page            |
+| `/get-started`         | Distro chooser       |
+| `/distro/arch-based`   | Arch-based builder   |
+| `/distro/debian-based` | Debian-based builder |
+| `/distro/fedora-based` | Fedora-based builder |
 
-## Project Structure
+## Getting Started
 
-- `src/components/` shared UI and feature components
-- `src/components/ui/` shadcn/ui-style primitives (`Button`, `Card`, `Input`, `Badge`)
-- `src/pages/` route pages (home, chooser, distro pages, 404)
-- `src/data/` typed local datasets and distro metadata
-- `src/types/` domain types (`PackageItem`, `Category`, `DistroFamily`)
-- `src/hooks/` reusable hooks (`usePackageSelection`, `useTheme`)
-- `src/lib/` utilities (`commandBuilder`, filtering, class merge helper)
+### 1. Clone the repository
 
-## Command Builder Logic
+```bash
+git clone https://github.com/med6ba/lilite.git
+cd lilite
+```
 
-`src/lib/commandBuilder.ts` builds exactly one grouped install command per distro:
-
-- Arch-based: `sudo pacman -S ...`
-- Debian-based: `sudo apt install ...`
-- Fedora-based: `sudo dnf install ...`
-
-Behavior:
-
-- removes duplicates (`Set`)
-- sorts package names for stable output
-- returns an empty string for no selection
-
-## Local Data + Logos
-
-`src/data/packages.ts` now contains **150 total packages** from official repositories:
-
-- 50 Arch-based
-- 50 Debian-based
-- 50 Fedora-based
-
-The dataset uses a tuple-to-object factory for maintainability and adds optional `logoUrl` on `PackageItem`.
-Package cards render real app logos where available (for example Firefox, Chromium, Git, Docker, Node.js, Python, VLC, OBS Studio, GIMP, Telegram) and gracefully fall back to a Lucide icon if a logo is missing or fails to load.
-
-Branding marks across the UI are served from `src/assets/logo.png` via `src/components/LogoMark.tsx`.
-
-## Add More Packages Later
-
-1. Open `src/data/packages.ts`.
-2. Add a tuple entry to the target distro list:
-   - `key`
-   - display `name`
-   - `category`
-   - official `packageName`
-   - fallback icon
-   - optional logo URL
-3. Keep package names tied to official repositories only.
-4. No command-builder changes are needed unless you add a new distro family.
-
-## Run
+### 2. Install dependencies
 
 ```bash
 npm install
+```
+
+### 3. Run the development server
+
+```bash
 npm run dev
 ```
 
-Build:
+## Contributing
 
-```bash
-npm run build
-```
+Contributions are welcome. You can help by:
+
+- adding more verified apps/packages from official repositories
+- improving the website and layout
+- refining UI/UX details
+- fixing bugs
+- improving code quality and maintainability
+
+Please keep contributions aligned with Lilite’s core behavior: safe, manual command generation only.
+
+## Project Philosophy
+
+- Simple
+- Transparent
+- Trustworthy
+- Official-repo-focused

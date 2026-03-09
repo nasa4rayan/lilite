@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { PackageItem } from '@/types'
 import { Card } from '@/components/ui/card'
+import { useLanguage } from '@/hooks/useLanguage'
 import { cn } from '@/lib/utils'
 
 interface PackageCardProps {
@@ -13,6 +14,7 @@ export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
   const Icon = pkg.icon
   const [logoLoadFailed, setLogoLoadFailed] = useState(false)
   const useLogo = Boolean(pkg.logoUrl) && !logoLoadFailed
+  const { messages } = useLanguage()
 
   return (
     <Card
@@ -28,7 +30,7 @@ export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
           checked={checked}
           onChange={() => onToggle(pkg.id)}
           className="mt-0.5 h-4 w-4 rounded border-input text-primary focus:ring-ring"
-          aria-label={`Select ${pkg.name}`}
+          aria-label={`${messages.common.selectLabelPrefix} ${pkg.name}`}
         />
 
         <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-background">

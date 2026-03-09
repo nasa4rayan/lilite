@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { Star } from 'lucide-react'
+import { LanguageToggle } from '@/components/LanguageToggle'
 import { LogoMark } from '@/components/LogoMark'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface NavbarProps {
   theme: 'light' | 'dark'
@@ -9,6 +11,8 @@ interface NavbarProps {
 }
 
 export function Navbar({ theme, toggleTheme }: NavbarProps) {
+  const { messages } = useLanguage()
+
   return (
     <header className="sticky top-0 z-50 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-2.5 sm:px-6">
@@ -24,12 +28,13 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
             href="https://github.com/med6ba/lilite"
             target="_blank"
             rel="noreferrer"
-            aria-label="Star Lilite on GitHub"
+            aria-label={messages.navbar.starAria}
             className="group inline-flex h-9 items-center gap-1 rounded-md border border-input bg-background px-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <Star className="h-4 w-4 text-primary transition-colors group-hover:fill-primary" />
-            <span className="hidden sm:inline">Star on GitHub</span>
+            <span className="hidden sm:inline">{messages.navbar.starOnGitHub}</span>
           </a>
+          <LanguageToggle />
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
       </div>

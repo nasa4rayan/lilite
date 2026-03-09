@@ -4,21 +4,23 @@ import { SectionHeader } from '@/components/SectionHeader'
 import archLogo from '@/assets/arch.png'
 import debianLogo from '@/assets/debian.png'
 import fedoraLogo from '@/assets/fedora.png'
+import { useLanguage } from '@/hooks/useLanguage'
 import { useSEO } from '@/hooks/useSEO'
 
 export function DistroChooserPage() {
+  const { messages } = useLanguage()
+
   useSEO({
-    title: 'Choose Distro Family',
-    description:
-      'Select Arch, Fedora, or Debian family to build one grouped Linux install command with official repository package names.',
+    title: messages.chooserPage.seoTitle,
+    description: messages.chooserPage.seoDescription,
     pathname: '/get-started',
   })
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
       <SectionHeader
-        title="Choose Your Distro Family"
-        description="Pick your distro family to generate package commands with the correct package manager and package names."
+        title={messages.chooserPage.title}
+        description={messages.chooserPage.description}
         action={<BackButton />}
         as="h1"
       />
@@ -26,23 +28,23 @@ export function DistroChooserPage() {
         <DistroCard
           to="/distro/arch-based"
           title="Arch"
-          description="Pacman workflow for Arch Linux and related distributions."
+          description={messages.chooserPage.archDescription}
           logoSrc={archLogo}
-          logoAlt="Arch Linux logo"
+          logoAlt={messages.chooserPage.archLogoAlt}
         />
         <DistroCard
           to="/distro/fedora-based"
           title="Fedora"
-          description="DNF workflow for Fedora and Fedora-like RPM systems."
+          description={messages.chooserPage.fedoraDescription}
           logoSrc={fedoraLogo}
-          logoAlt="Fedora logo"
+          logoAlt={messages.chooserPage.fedoraLogoAlt}
         />
         <DistroCard
           to="/distro/debian-based"
           title="Debian"
-          description="Apt workflow for Debian, Ubuntu, and Debian derivatives."
+          description={messages.chooserPage.debianDescription}
           logoSrc={debianLogo}
-          logoAlt="Debian logo"
+          logoAlt={messages.chooserPage.debianLogoAlt}
         />
       </div>
     </main>

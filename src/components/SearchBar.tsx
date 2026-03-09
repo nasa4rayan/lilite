@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface SearchBarProps {
   value: string
@@ -7,14 +8,16 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ value, onChange }: SearchBarProps) {
+  const { messages } = useLanguage()
+
   return (
     <div className="relative">
       <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
-        aria-label="Search packages"
+        aria-label={messages.common.searchPackagesAria}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Search by app, package, or description"
+        placeholder={messages.common.searchPlaceholder}
         className="h-11 rounded-lg bg-card/70 pl-9"
       />
     </div>

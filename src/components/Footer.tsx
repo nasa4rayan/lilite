@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { LogoMark } from '@/components/LogoMark'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export function Footer() {
   const year = new Date().getFullYear()
+  const { messages } = useLanguage()
 
   return (
     <footer className="border-t bg-card/35">
@@ -16,47 +18,44 @@ export function Footer() {
               <span className="text-base font-extrabold tracking-tight">Lilite</span>
             </Link>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-              Lilite is a Linux command builder that helps you generate one grouped install command from official repositories for
-              Arch-based, Debian-based, and Fedora-based systems.
+              {messages.footer.brandDescription}
             </p>
-            <p className="text-xs text-muted-foreground">
-              Manual review and execution only. No auto-installation. No external repositories.
-            </p>
+            <p className="text-xs text-muted-foreground">{messages.footer.manualNotice}</p>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:ml-auto">
-            <nav aria-label="Footer product links">
-              <h2 className="text-sm font-semibold tracking-tight text-foreground">Navigation</h2>
+            <nav aria-label={messages.footer.navigation}>
+              <h2 className="text-sm font-semibold tracking-tight text-foreground">{messages.footer.navigation}</h2>
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
                   <Link to="/" className="text-muted-foreground transition-colors hover:text-primary">
-                    Home
+                    {messages.footer.home}
                   </Link>
                 </li>
                 <li>
                   <Link to="/get-started" className="text-muted-foreground transition-colors hover:text-primary">
-                    Distro Chooser
+                    {messages.footer.distroChooser}
                   </Link>
                 </li>
               </ul>
             </nav>
 
-            <nav aria-label="Footer distro links">
-              <h2 className="text-sm font-semibold tracking-tight text-foreground">Distros</h2>
+            <nav aria-label={messages.footer.distros}>
+              <h2 className="text-sm font-semibold tracking-tight text-foreground">{messages.footer.distros}</h2>
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
                   <Link to="/distro/arch-based" className="text-muted-foreground transition-colors hover:text-primary">
-                    Arch
+                    {messages.footer.arch}
                   </Link>
                 </li>
                 <li>
                   <Link to="/distro/fedora-based" className="text-muted-foreground transition-colors hover:text-primary">
-                    Fedora
+                    {messages.footer.fedora}
                   </Link>
                 </li>
                 <li>
                   <Link to="/distro/debian-based" className="text-muted-foreground transition-colors hover:text-primary">
-                    Debian
+                    {messages.footer.debian}
                   </Link>
                 </li>
               </ul>
@@ -65,7 +64,9 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t pt-4">
-          <p className="text-sm text-muted-foreground">© {year} Lilite. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © {year} Lilite. {messages.footer.copyright}
+          </p>
         </div>
       </div>
     </footer>

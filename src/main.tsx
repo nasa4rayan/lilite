@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
+import { LanguageProvider } from '@/hooks/useLanguage'
 import './index.css'
 import favicon from './assets/favicon.ico'
 import logo from './assets/logo.png'
@@ -47,8 +48,10 @@ upsertMetaByName('twitter:image', logo)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </LanguageProvider>
   </React.StrictMode>,
 )
