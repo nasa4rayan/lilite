@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { Footer } from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
+import { ChatWidget } from '@/components/chat-widget'
 import { useTheme } from '@/hooks/useTheme'
 import { ArchPage } from '@/pages/ArchPage'
 import { DebianPage } from '@/pages/DebianPage'
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+      <ChatWidget persistHistory defaultModel="llama-3.3-70b-versatile" />
       <Footer />
     </div>
   )
