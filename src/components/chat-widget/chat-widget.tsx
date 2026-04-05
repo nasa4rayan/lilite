@@ -18,12 +18,42 @@ interface ChatWidgetProps {
 export const ChatWidget = ({ persistHistory = true, defaultModel = 'llama-3.3-70b-versatile' }: ChatWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [draft, setDraft] = useState('')
+  const [useClientApiKey, setUseClientApiKey] = useState(false)
+  const [clientApiKey, setClientApiKey] = useState('')
   const viewportRef = useRef<HTMLDivElement>(null)
 
   const { availableModels, clearMessages, error, isLoading, messages, model, sendMessage, setModel } = useChatLogic({
     persistHistory,
     initialModel: defaultModel,
+    useClientApiKey,
+    clientApiKey,
   })
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const savedMode = window.sessionStorage.getItem('lilite-chat-use-client-key')
+    const savedKey = window.sessionStorage.getItem('lilite-chat-client-key')
+
+    if (savedMode === 'true') {
+      setUseClientApiKey(true)
+    }
+
+    if (savedKey) {
+      setClientApiKey(savedKey)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    window.sessionStorage.setItem('lilite-chat-use-client-key', String(useClientApiKey))
+    window.sessionStorage.setItem('lilite-chat-client-key', clientApiKey)
+  }, [clientApiKey, useClientApiKey])
 
   useEffect(() => {
     if (!viewportRef.current) {
@@ -107,6 +137,27 @@ export const ChatWidget = ({ persistHistory = true, defaultModel = 'llama-3.3-70
             onValueChange={setModel}
             options={availableModels.map((option) => ({ label: option, value: option }))}
           />
+          <div className="mt-2 space-y-2">
+            <Button
+              type="button"
+              variant={useClientApiKey ? 'default' : 'outline'}
+              size="sm"
+              className="h-8 w-full text-xs"
+              onClick={() => setUseClientApiKey((value) => !value)}
+            >
+              {useClientApiKey ? 'BYOK Mode: ON' : 'BYOK Mode: OFF'}
+            </Button>
+            {useClientApiKey ? (
+              <Input
+                type="password"
+                value={clientApiKey}
+                onChange={(event) => setClientApiKey(event.target.value)}
+                placeholder="Paste your Groq key (gsk_...)"
+                className="h-9 text-xs"
+                aria-label="Your Groq API key"
+              />
+            ) : null}
+          </div>
         </div>
 
         <ScrollArea className="min-h-0 flex-1 px-3 py-3" viewportRef={viewportRef}>

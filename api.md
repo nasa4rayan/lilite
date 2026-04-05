@@ -1,73 +1,59 @@
-# Groq API Setup (Local + Vercel)
+# Groq API Setup
 
-## 1) Local `.env.local` format (important)
+## Recommended for Open Source: BYOK (Frontend)
 
-Use this exact format:
+This project now supports BYOK mode in the chat widget.
+
+What this means:
+- No `.env.local` needed
+- No shared server key needed
+- Each user can paste their own `gsk_...` key in the widget
+
+How to use:
+1. Open chat widget
+2. Toggle `BYOK Mode: ON`
+3. Paste your Groq key in the input
+4. Start chatting
+
+## Optional: Backend Key Mode (`/api/chat`)
+
+Use this only if you want server-managed API calls.
+
+### Local
+
+Create `.env.local` at project root:
 
 ```env
 GROQ_API_KEY=gsk_your_real_key_here
 ```
 
 Rules:
-- No space before or after `=`
+- No spaces around `=`
 - No quotes
 - No semicolon
 
-Wrong example (causes failures):
-
-```env
-GROQ_API_KEY= gsk_rest
-```
-
-The extra space after `=` makes the value invalid.
-
-After updating `.env.local`, restart dev server:
+Restart dev server after env changes:
 
 ```bash
 npm run dev
 ```
 
-## 2) Add API key in Vercel
+### Vercel
 
-1. Open your project in Vercel dashboard.
-2. Go to `Project Settings` -> `Environment Variables`.
-3. Add:
-   - Name: `GROQ_API_KEY`
-   - Value: your real Groq key (`gsk_...`)
-4. Select environments:
-   - `Production`
-   - `Preview`
-   - `Development` (optional but recommended)
-5. Save.
-6. Redeploy the project.
+1. Go to `Project Settings` -> `Environment Variables`
+2. Add `GROQ_API_KEY` with your `gsk_...` value
+3. Apply to `Production` and `Preview` (and `Development` if needed)
+4. Redeploy
 
-## 3) Verify endpoint
+## API Paths
 
-Your chat posts to:
+- Frontend BYOK calls Groq directly: `https://api.groq.com/openai/v1/chat/completions`
+- Backend mode uses local/project endpoint: `/api/chat`
 
-```text
-/api/chat
-```
+## Troubleshooting
 
-In this repo:
-- Local dev API is handled in `vite.config.ts` middleware.
-- Next-style handler is in `src/app/api/chat/route.ts` (for Next runtime deployments).
-
-## 4) Timeout troubleshooting
-
-If requests still timeout:
-
-1. Confirm key is valid in Groq dashboard (not revoked).
-2. Confirm no spaces in `.env.local`.
-3. Restart dev server after every env change.
-4. Open browser DevTools -> `Network` -> check `/api/chat` response status/body.
-5. On Vercel, confirm env var exists in the same project and redeploy.
-
-## 5) Quick test cURL (optional)
-
-```bash
-curl -X POST http://localhost:5173/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{"model":"llama-3.3-70b-versatile","stream":false,"messages":[{"role":"user","content":"hello"}]}'
-```
-
+If chat fails:
+1. Ensure key starts with `gsk_`
+2. Ensure key is active (not revoked)
+3. If using backend mode, restart `npm run dev`
+4. Check browser DevTools `Network` tab for request errors
