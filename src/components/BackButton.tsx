@@ -17,7 +17,7 @@ export function BackButton() {
   }
 
   return (
-    <Button variant="outline" size="sm" onClick={handleBack}>
+    <Button variant="outline" size="sm" className="h-10 px-4" onClick={handleBack}>
       <ArrowLeft className="mr-2 h-4 w-4" />
       {messages.common.back}
     </Button>

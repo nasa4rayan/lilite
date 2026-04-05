@@ -14,6 +14,7 @@ export function ThemeToggle({ theme, toggleTheme }: ThemeToggleProps) {
     <Button
       variant="outline"
       size="sm"
+      className="h-10 min-w-10 px-3"
       aria-label={theme === 'light' ? messages.themeToggle.switchToDark : messages.themeToggle.switchToLight}
       onClick={toggleTheme}
     >

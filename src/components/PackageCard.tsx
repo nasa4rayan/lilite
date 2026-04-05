@@ -40,13 +40,16 @@ export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
         checked ? 'border-primary/60 bg-primary/5 dark:bg-primary/10' : '',
       )}
     >
-      <label htmlFor={pkg.id} className="flex cursor-pointer items-start gap-3">
+      <label
+        htmlFor={pkg.id}
+        className="flex cursor-pointer items-start gap-3 rounded-lg focus-within:ring-2 focus-within:ring-ring/70 focus-within:ring-offset-2 focus-within:ring-offset-background"
+      >
         <input
           id={pkg.id}
           type="checkbox"
           checked={checked}
           onChange={() => onToggle(pkg.id)}
-          className="mt-0.5 h-4 w-4 rounded border-input text-primary focus:ring-ring"
+          className="mt-0.5 h-5 w-5 shrink-0 rounded border-input text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label={`${messages.common.selectLabelPrefix} ${pkg.name}`}
         />
 
@@ -68,7 +71,7 @@ export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
 
         <div className="min-w-0 space-y-1">
           <p className="truncate text-sm font-semibold leading-tight tracking-tight">{pkg.name}</p>
-          <p className="text-xs leading-relaxed text-muted-foreground">{pkg.description}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">{pkg.description}</p>
         </div>
       </label>
     </Card>

@@ -1,6 +1,7 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import { GROQ_API_KEY, GROQ_API_URL, GROQ_DEFAULT_MODEL } from '@/config/groq'
 
 interface ChatMessage {
   id: string
@@ -9,32 +10,38 @@ interface ChatMessage {
   createdAt: number
 }
 
-interface UseChatLogicOptions {
-  persistHistory?: boolean
-  initialModel?: string
-  useClientApiKey?: boolean
-  clientApiKey?: string
-}
-
 interface UseChatLogicResult {
-  availableModels: string[]
   clearMessages: () => void
   error: string | null
   isLoading: boolean
   messages: ChatMessage[]
-  model: string
   sendMessage: (content: string) => Promise<void>
-  setModel: (model: string) => void
 }
 
-interface ChatRequestBody {
-  messages: Array<{ role: 'user' | 'assistant'; content: string }>
-  model: string
-  stream: boolean
+interface GroqStreamChunk {
+  choices?: Array<{
+    delta?: {
+      content?: string
+    }
+  }>
 }
 
-const STORAGE_KEY = 'lilite-chat-widget-history'
-const MODEL_STORAGE_KEY = 'lilite-chat-widget-model'
+const SYSTEM_PROMPT = `
+You are Lilite Assistant for beginners.
+
+Rules:
+- Only help with Linux packages and troubleshooting on Arch-based, Debian-based, and Fedora-based systems.
+- Be brief: 1 to 4 short lines by default.
+- Match the user's language automatically:
+  - Darija (Moroccan Arabic written in Arabic script or Latin script)
+  - Arabic
+  - French
+  - English
+- If mixed language input, answer in the dominant user language.
+- Keep tone simple and practical for beginners.
+- Prefer safe commands and explain each command in very few words.
+- If user asks outside Linux package scope, politely redirect in the same language.
+`.trim()
 
 const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 
@@ -46,66 +53,10 @@ const sanitizeText = (value: string) => {
     .trim()
 }
 
-const MODEL_OPTIONS = ['llama-3.3-70b-versatile', 'mixtral-8x7b-32768']
-
-export const useChatLogic = ({
-  persistHistory = true,
-  initialModel = MODEL_OPTIONS[0],
-  useClientApiKey = false,
-  clientApiKey = '',
-}: UseChatLogicOptions = {}): UseChatLogicResult => {
+export const useChatLogic = (): UseChatLogicResult => {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [model, setModel] = useState(() => (MODEL_OPTIONS.includes(initialModel) ? initialModel : MODEL_OPTIONS[0]))
-
-  useEffect(() => {
-    if (!persistHistory || typeof window === 'undefined') {
-      return
-    }
-
-    const raw = window.sessionStorage.getItem(STORAGE_KEY)
-
-    if (!raw) {
-      return
-    }
-
-    try {
-      const parsed = JSON.parse(raw) as ChatMessage[]
-      if (Array.isArray(parsed)) {
-        setMessages(parsed)
-      }
-    } catch {
-      window.sessionStorage.removeItem(STORAGE_KEY)
-    }
-  }, [persistHistory])
-
-  useEffect(() => {
-    if (!persistHistory || typeof window === 'undefined') {
-      return
-    }
-
-    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
-  }, [messages, persistHistory])
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    const savedModel = window.sessionStorage.getItem(MODEL_STORAGE_KEY)
-    if (savedModel && MODEL_OPTIONS.includes(savedModel)) {
-      setModel(savedModel)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    window.sessionStorage.setItem(MODEL_STORAGE_KEY, model)
-  }, [model])
 
   const clearMessages = useCallback(() => {
     setMessages([])
@@ -114,8 +65,15 @@ export const useChatLogic = ({
 
   const sendMessage = useCallback(
     async (content: string) => {
-      const sanitizedInput = sanitizeText(content)
-      if (!sanitizedInput || isLoading) {
+      const userText = sanitizeText(content)
+      const apiKey = GROQ_API_KEY.trim()
+
+      if (!userText || isLoading) {
+        return
+      }
+
+      if (!apiKey || apiKey === 'REPLACE_WITH_YOUR_GROQ_API_KEY') {
+        setError('Set your Groq API key in src/config/groq.ts before using chat.')
         return
       }
 
@@ -125,7 +83,7 @@ export const useChatLogic = ({
       const userMessage: ChatMessage = {
         id: generateId(),
         role: 'user',
-        content: sanitizedInput,
+        content: userText,
         createdAt: Date.now(),
       }
 
@@ -140,64 +98,38 @@ export const useChatLogic = ({
       const nextMessages = [...messages, userMessage, assistantMessage]
       setMessages(nextMessages)
 
-      const requestBody: ChatRequestBody = {
-        messages: nextMessages.map((message) => ({ role: message.role, content: message.content })),
-        model,
-        stream: true,
-      }
-
       try {
-        let response: Response
-
-        if (useClientApiKey) {
-          const apiKey = (clientApiKey ?? '').trim()
-          if (!apiKey) {
-            throw new Error('Add your Groq API key in the chat widget to use BYOK mode.')
-          }
-
-          response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model,
-              messages: requestBody.messages,
-              stream: true,
-            }),
-          })
-        } else {
-          response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestBody),
-          })
-        }
+        const response = await fetch(GROQ_API_URL, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: GROQ_DEFAULT_MODEL,
+            stream: true,
+            temperature: 0.2,
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              ...nextMessages
+                .filter((message) => message.role === 'assistant' || message.role === 'user')
+                .map((message) => ({ role: message.role, content: message.content })),
+            ],
+          }),
+        })
 
         if (!response.ok) {
-          const payload = (await response.json().catch(() => null)) as { error?: string } | null
-          throw new Error(payload?.error ?? 'Chat request failed.')
+          throw new Error(`Groq request failed (${response.status}).`)
         }
 
         if (!response.body) {
-          const payload = (await response.json()) as { reply?: string; choices?: Array<{ message?: { content?: string } }> }
-          const directReply = payload.reply ?? payload.choices?.[0]?.message?.content ?? ''
-          const safeContent = sanitizeText(directReply)
-
-          setMessages((current) =>
-            current.map((message) =>
-              message.id === assistantMessageId ? { ...message, content: safeContent || 'No response received.' } : message,
-            ),
-          )
-
-          return
+          throw new Error('No response body from Groq.')
         }
 
         const reader = response.body.getReader()
         const decoder = new TextDecoder()
-        let streamedContent = ''
-        let streamBuffer = ''
+        let aggregated = ''
+        let buffer = ''
 
         while (true) {
           const { done, value } = await reader.read()
@@ -206,75 +138,65 @@ export const useChatLogic = ({
             break
           }
 
-          const chunkText = decoder.decode(value, { stream: true })
+          buffer += decoder.decode(value, { stream: true })
+          const events = buffer.split('\n\n')
+          buffer = events.pop() ?? ''
 
-          if (useClientApiKey) {
-            streamBuffer += chunkText
-            const events = streamBuffer.split('\n\n')
-            streamBuffer = events.pop() ?? ''
+          events.forEach((eventText) => {
+            const line = eventText
+              .split('\n')
+              .map((item) => item.trim())
+              .find((item) => item.startsWith('data:'))
 
-            events.forEach((event) => {
-              const line = event
-                .split('\n')
-                .map((item) => item.trim())
-                .find((item) => item.startsWith('data:'))
+            if (!line) {
+              return
+            }
 
-              if (!line) {
-                return
+            const payload = line.replace(/^data:\s*/, '')
+
+            if (!payload || payload === '[DONE]') {
+              return
+            }
+
+            try {
+              const parsed = JSON.parse(payload) as GroqStreamChunk
+              const delta = parsed.choices?.[0]?.delta?.content ?? ''
+
+              if (delta) {
+                aggregated += delta
               }
+            } catch {
+              // Ignore malformed partial payloads.
+            }
+          })
 
-              const data = line.replace(/^data:\s*/, '')
-              if (!data || data === '[DONE]') {
-                return
-              }
-
-              try {
-                const parsed = JSON.parse(data) as { choices?: Array<{ delta?: { content?: string } }> }
-                const delta = parsed.choices?.[0]?.delta?.content ?? ''
-                if (delta) {
-                  streamedContent += delta
-                }
-              } catch {
-                // Ignore malformed partial event chunks.
-              }
-            })
-          } else {
-            streamedContent += chunkText
-          }
-
-          const safeContent = sanitizeText(streamedContent)
-
+          const safe = sanitizeText(aggregated)
           setMessages((current) =>
-            current.map((message) => (message.id === assistantMessageId ? { ...message, content: safeContent } : message)),
+            current.map((message) => (message.id === assistantMessageId ? { ...message, content: safe } : message)),
           )
         }
       } catch (chatError) {
-        const fallbackMessage = chatError instanceof Error ? chatError.message : 'Unable to fetch AI response.'
-        setError(fallbackMessage)
+        const message = chatError instanceof Error ? chatError.message : 'Unable to fetch AI response.'
+        setError(message)
         setMessages((current) =>
-          current.map((message) =>
-            message.id === assistantMessageId ? { ...message, content: `Error: ${fallbackMessage}` } : message,
-          ),
+          current.map((item) => (item.id === assistantMessageId ? { ...item, content: `Error: ${message}` } : item)),
         )
       } finally {
         setIsLoading(false)
       }
     },
-    [clientApiKey, isLoading, messages, model, useClientApiKey],
+    [isLoading, messages],
   )
 
   return useMemo(
     () => ({
-      availableModels: MODEL_OPTIONS,
       clearMessages,
       error,
       isLoading,
       messages,
-      model,
       sendMessage,
-      setModel,
     }),
-    [clearMessages, error, isLoading, messages, model, sendMessage],
+    [clearMessages, error, isLoading, messages, sendMessage],
   )
 }
 

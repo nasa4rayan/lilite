@@ -2,14 +2,16 @@ import { useState } from 'react'
 import { Check, Copy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLanguage } from '@/hooks/useLanguage'
+import { cn } from '@/lib/utils'
 
 interface CopyButtonProps {
   text: string
   disabled?: boolean
   label?: string
+  className?: string
 }
 
-export function CopyButton({ text, disabled, label }: CopyButtonProps) {
+export function CopyButton({ text, disabled, label, className }: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
   const { messages } = useLanguage()
 
@@ -28,7 +30,12 @@ export function CopyButton({ text, disabled, label }: CopyButtonProps) {
   }
 
   return (
-    <Button onClick={handleCopy} disabled={disabled || !text.trim()} variant={copied ? 'secondary' : 'default'}>
+    <Button
+      onClick={handleCopy}
+      disabled={disabled || !text.trim()}
+      variant={copied ? 'secondary' : 'default'}
+      className={cn('h-10 w-full sm:w-auto', className)}
+    >
       {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
       {copied ? messages.common.copied : label ?? messages.common.copyCommand}
     </Button>
