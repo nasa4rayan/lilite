@@ -9,6 +9,7 @@ export function NotFoundPage() {
   useSEO({
     title: messages.notFound.seoTitle,
     description: messages.notFound.seoDescription,
+    noindex: true,
   })
 
   return (
