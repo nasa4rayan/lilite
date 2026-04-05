@@ -50,7 +50,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
-      <ChatWidget persistHistory defaultModel="llama-3.3-70b-versatile" />
+      <ChatWidget />
       <Footer />
     </div>
   )
