@@ -18,7 +18,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({ className, op
       <select
         ref={ref}
         className={cn(
-          'h-9 w-full appearance-none rounded-md border border-input bg-background px-3 pr-8 text-xs text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+          'h-10 w-full appearance-none rounded-md border border-input bg-background px-3 pr-9 text-base text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm',
           className,
         )}
         onChange={(event) => onValueChange(event.target.value)}
