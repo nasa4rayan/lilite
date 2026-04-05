@@ -14,12 +14,10 @@ interface ChatMessage {
 
 interface ChatPayload {
   messages?: ChatMessage[]
-  model?: string
   stream?: boolean
 }
 
 const DEFAULT_MODEL = 'llama-3.3-70b-versatile'
-const ALLOWED_MODELS = new Set(['llama-3.3-70b-versatile', 'mixtral-8x7b-32768'])
 const ASSISTANT_SYSTEM_PROMPT = `
 You are Lilite Assistant, a beginner-friendly Linux package helper for the Lilite website.
 
@@ -90,7 +88,7 @@ const chatApiDevPlugin = (groqApiKey: string) => ({
         return
       }
 
-      const model = payload.model && ALLOWED_MODELS.has(payload.model) ? payload.model : DEFAULT_MODEL
+      const model = DEFAULT_MODEL
       const stream = payload.stream !== false
       const messages = payload.messages
         .filter((message) => message.role === 'assistant' || message.role === 'user')

@@ -8,13 +8,12 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Select } from '@/components/ui/select'
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [draft, setDraft] = useState('')
   const viewportRef = useRef<HTMLDivElement>(null)
-  const { availableModels, clearMessages, error, isLoading, messages, model, sendMessage, setModel } = useChatLogic()
+  const { clearMessages, error, isLoading, messages, sendMessage } = useChatLogic()
 
   useEffect(() => {
     if (!viewportRef.current) {
@@ -71,18 +70,6 @@ export const ChatWidget = () => {
             </Button>
           </div>
         </header>
-
-        <div className="border-b border-border px-3 py-2">
-          <label htmlFor="chat-model" className="mb-1 block text-[11px] font-medium text-muted-foreground">
-            AI Model
-          </label>
-          <Select
-            id="chat-model"
-            value={model}
-            onValueChange={(value) => setModel(value as typeof model)}
-            options={availableModels.map((option) => ({ label: option, value: option }))}
-          />
-        </div>
 
         <ScrollArea className="min-h-0 flex-1 px-3 py-3" viewportRef={viewportRef}>
           <div className="space-y-2 pb-1">

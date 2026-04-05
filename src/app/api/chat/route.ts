@@ -13,12 +13,10 @@ interface IncomingMessage {
 
 interface ChatRequestBody {
   messages?: IncomingMessage[]
-  model?: string
   stream?: boolean
 }
 
 const DEFAULT_MODEL = 'llama-3.3-70b-versatile'
-const ALLOWED_MODELS = new Set(['llama-3.3-70b-versatile', 'mixtral-8x7b-32768'])
 const ASSISTANT_SYSTEM_PROMPT = `
 You are Lilite Assistant for beginners.
 
@@ -80,7 +78,7 @@ export const POST = async (request: Request): Promise<Response> => {
     return jsonResponse({ error: 'Request must include at least one message.' }, 400)
   }
 
-  const model = payload.model && ALLOWED_MODELS.has(payload.model) ? payload.model : DEFAULT_MODEL
+  const model = DEFAULT_MODEL
   const stream = payload.stream !== false
 
   const normalizedMessages = payload.messages
