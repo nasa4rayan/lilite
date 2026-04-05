@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { PackageItem } from '@/types'
 import { Card } from '@/components/ui/card'
 import { useLanguage } from '@/hooks/useLanguage'
@@ -12,9 +12,26 @@ interface PackageCardProps {
 
 export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
   const Icon = pkg.icon
-  const [logoLoadFailed, setLogoLoadFailed] = useState(false)
-  const useLogo = Boolean(pkg.logoUrl) && !logoLoadFailed
+  const [logoIndex, setLogoIndex] = useState(0)
   const { messages } = useLanguage()
+  const logoCandidates = useMemo(() => {
+    const normalized = [pkg.packageName, pkg.name]
+      .map((value) =>
+        value
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '')
+          .replace(/(desktop|stable|launcher|linux|qt|forlinux|gameslauncher)$/g, ''),
+      )
+      .filter(Boolean)
+
+    const candidates = [pkg.logoUrl, ...normalized.map((slug) => `https://cdn.simpleicons.org/${slug}`)]
+    return Array.from(new Set(candidates.filter(Boolean))) as string[]
+  }, [pkg.logoUrl, pkg.name, pkg.packageName])
+  const activeLogo = logoCandidates[logoIndex]
+
+  useEffect(() => {
+    setLogoIndex(0)
+  }, [pkg.id])
 
   return (
     <Card
@@ -33,19 +50,19 @@ export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
           aria-label={`${messages.common.selectLabelPrefix} ${pkg.name}`}
         />
 
-        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-background">
-          {useLogo ? (
+        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-background shadow-sm">
+          {activeLogo ? (
             <img
-              src={pkg.logoUrl}
+              src={activeLogo}
               alt=""
-              className="h-4 w-4 object-contain"
+              className="h-6 w-6 object-contain"
               loading="lazy"
               decoding="async"
               aria-hidden="true"
-              onError={() => setLogoLoadFailed(true)}
+              onError={() => setLogoIndex((current) => current + 1)}
             />
           ) : (
-            <Icon className="h-4 w-4 text-primary" aria-hidden="true" />
+            <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
           )}
         </span>
 

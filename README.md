@@ -80,6 +80,7 @@ npm run dev
 Contributions are welcome. You can help by:
 
 - adding more verified apps/packages from official repositories
+- expanding the shared cross-distro app catalog with popular official-repo packages
 - improving the website and layout
 - refining UI/UX details
 - fixing bugs
