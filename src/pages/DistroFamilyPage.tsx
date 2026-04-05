@@ -85,16 +85,17 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
       <section>
         <SectionHeader title={messages.distroPage.packageSelectionTitle} description={messages.distroPage.packageSelectionDescription} />
 
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <Badge variant="secondary" className="rounded-md px-3 py-1 text-xs">
+        <div className="mb-3 flex flex-wrap items-center gap-2.5">
+          <Badge variant="secondary" className="rounded-md px-3 py-1 text-sm" aria-live="polite" aria-atomic="true">
             {messages.distroPage.selected}: {selectedCount}
           </Badge>
           {canUseCommunityHelper ? (
-            <div className="inline-flex items-center gap-1 rounded-md border bg-card p-1">
+            <div className="inline-flex flex-wrap items-center gap-1 rounded-lg border bg-card p-1" role="group" aria-label="Package source mode">
               <button
                 type="button"
                 onClick={() => setUseCommunityHelper(false)}
-                className={`rounded px-2 py-1 text-xs font-medium transition ${
+                aria-pressed={!useCommunityHelper}
+                className={`min-h-9 rounded-md px-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                   !useCommunityHelper ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -103,7 +104,8 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
               <button
                 type="button"
                 onClick={() => setUseCommunityHelper(true)}
-                className={`rounded px-2 py-1 text-xs font-medium transition ${
+                aria-pressed={useCommunityHelper}
+                className={`min-h-9 rounded-md px-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                   useCommunityHelper ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -114,7 +116,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
         </div>
 
         {canUseCommunityHelper ? (
-          <p className="mb-3 text-xs text-muted-foreground">
+          <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
             Community mode uses <code>yay -S</code> for easier installs of apps like Steam/Discord on Arch-family distros.
           </p>
         ) : null}
@@ -131,12 +133,12 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
             ))}
           </div>
           {filteredPackages.length === 0 ? (
-            <p className="rounded-md border border-dashed bg-card/40 p-3 text-sm text-muted-foreground">
+            <p className="mt-3 rounded-md border border-dashed bg-card/40 p-3 text-sm text-muted-foreground">
               {messages.distroPage.noPackagesMatch}
             </p>
           ) : null}
 
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
             <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleClearSelection} disabled={selectedCount === 0}>
               <Trash2 className="mr-2 h-4 w-4" />
               {messages.distroPage.clearSelection}
@@ -152,7 +154,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
                 <CardTitle className="text-base">{messages.distroPage.yourLiliteCommand}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <pre className="min-h-24 overflow-x-auto rounded-md border bg-muted/40 p-3 font-mono text-xs leading-relaxed sm:text-sm">
+                <pre className="min-h-24 overflow-x-auto whitespace-pre-wrap break-words rounded-md border bg-muted/40 p-3 font-mono text-xs leading-relaxed sm:text-sm">
                   {liliteCommand || messages.distroPage.selectPackagesPlaceholder}
                 </pre>
                 <CopyButton text={liliteCommand} disabled={!liliteCommand.trim()} />

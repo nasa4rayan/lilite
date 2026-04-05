@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useMemo, useState } from 'react'
-import { GROQ_API_KEY, GROQ_API_URL, GROQ_DEFAULT_MODEL, GROQ_MODEL_OPTIONS, GroqModel } from '@/config/groq'
+import { GROQ_API_KEY, GROQ_API_URL, GROQ_DEFAULT_MODEL } from '@/config/groq'
 
 interface ChatMessage {
   id: string
@@ -11,14 +11,11 @@ interface ChatMessage {
 }
 
 interface UseChatLogicResult {
-  availableModels: readonly GroqModel[]
   clearMessages: () => void
   error: string | null
   isLoading: boolean
   messages: ChatMessage[]
-  model: GroqModel
   sendMessage: (content: string) => Promise<void>
-  setModel: (model: GroqModel) => void
 }
 
 interface GroqStreamChunk {
@@ -60,7 +57,6 @@ export const useChatLogic = (): UseChatLogicResult => {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [model, setModel] = useState<GroqModel>(GROQ_DEFAULT_MODEL)
 
   const clearMessages = useCallback(() => {
     setMessages([])
@@ -110,7 +106,7 @@ export const useChatLogic = (): UseChatLogicResult => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model,
+            model: GROQ_DEFAULT_MODEL,
             stream: true,
             temperature: 0.2,
             messages: [
@@ -189,21 +185,18 @@ export const useChatLogic = (): UseChatLogicResult => {
         setIsLoading(false)
       }
     },
-    [isLoading, messages, model],
+    [isLoading, messages],
   )
 
   return useMemo(
     () => ({
-      availableModels: GROQ_MODEL_OPTIONS,
       clearMessages,
       error,
       isLoading,
       messages,
-      model,
       sendMessage,
-      setModel,
     }),
-    [clearMessages, error, isLoading, messages, model, sendMessage],
+    [clearMessages, error, isLoading, messages, sendMessage],
   )
 }
 

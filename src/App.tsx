@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { AlpinePage } from '@/pages/AlpinePage'
+import { Analytics } from '@vercel/analytics/react'
 import { Footer } from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
 import { ChatWidget } from '@/components/chat-widget'
@@ -27,8 +28,11 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <div className="flex-1 overflow-x-hidden">
+      <div id="main-content" tabIndex={-1} className="flex-1 overflow-x-hidden focus:outline-none">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/get-started" element={<DistroChooserPage />} />
@@ -52,6 +56,7 @@ export default function App() {
       </div>
       <ChatWidget />
       <Footer />
+      <Analytics />
     </div>
   )
 }
