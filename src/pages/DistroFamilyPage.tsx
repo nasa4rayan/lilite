@@ -4,7 +4,7 @@ import { BackButton } from '@/components/BackButton'
 import { categories } from '@/data/constants'
 import { distroPackages, maintenanceCommands } from '@/data/packages'
 import { usePackageSelection } from '@/hooks/usePackageSelection'
-import { buildInstallCommand } from '@/lib/commandBuilder'
+import { buildInstallCommand, supportsCommunityHelper } from '@/lib/commandBuilder'
 import { filterPackages } from '@/lib/filterPackages'
 import { Category, DistroFamily } from '@/types'
 import { Button } from '@/components/ui/button'
@@ -29,6 +29,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
   const [activeCategory, setActiveCategory] = useState<Category | 'All'>('All')
   const [showLiliteCommand, setShowLiliteCommand] = useState(false)
   const [liliteCommand, setLiliteCommand] = useState('')
+  const [useCommunityHelper, setUseCommunityHelper] = useState(false)
 
   const allPackages = distroPackages[distro]
   const { selectedPackages, selectedCount, isSelected, togglePackage, clearSelection } = usePackageSelection(allPackages)
@@ -38,7 +39,11 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
     [allPackages, searchTerm, activeCategory],
   )
 
-  const command = useMemo(() => buildInstallCommand(distro, selectedPackages), [distro, selectedPackages])
+  const command = useMemo(
+    () => buildInstallCommand(distro, selectedPackages, { useCommunityHelper }),
+    [distro, selectedPackages, useCommunityHelper],
+  )
+  const canUseCommunityHelper = supportsCommunityHelper(distro)
 
   useSEO({
     title: `${messages.distroInfo[distro].title} ${messages.distroPage.seoTitleSuffix}`,
@@ -84,7 +89,35 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
           <Badge variant="secondary" className="rounded-md px-3 py-1 text-xs">
             {messages.distroPage.selected}: {selectedCount}
           </Badge>
+          {canUseCommunityHelper ? (
+            <div className="inline-flex items-center gap-1 rounded-md border bg-card p-1">
+              <button
+                type="button"
+                onClick={() => setUseCommunityHelper(false)}
+                className={`rounded px-2 py-1 text-xs font-medium transition ${
+                  !useCommunityHelper ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Official
+              </button>
+              <button
+                type="button"
+                onClick={() => setUseCommunityHelper(true)}
+                className={`rounded px-2 py-1 text-xs font-medium transition ${
+                  useCommunityHelper ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Community (yay)
+              </button>
+            </div>
+          ) : null}
         </div>
+
+        {canUseCommunityHelper ? (
+          <p className="mb-3 text-xs text-muted-foreground">
+            Community mode uses <code>yay -S</code> for easier installs of apps like Steam/Discord on Arch-family distros.
+          </p>
+        ) : null}
 
         <div className="space-y-3">
           <SearchBar value={searchTerm} onChange={setSearchTerm} />

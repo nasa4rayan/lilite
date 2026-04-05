@@ -57,11 +57,15 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: radial-gradient(circle at 8% -18%, hsl(152 60% 70% / 0.2), transparent 42%);
+  background-image:
+    radial-gradient(circle at 8% -18%, hsl(152 60% 70% / 0.2), transparent 42%),
+    radial-gradient(circle at 88% 0%, hsl(200 90% 72% / 0.08), transparent 32%);
 }
 
 .dark body {
-  background-image: radial-gradient(circle at 8% -18%, hsl(152 65% 26% / 0.16), transparent 40%);
+  background-image:
+    radial-gradient(circle at 8% -18%, hsl(152 65% 26% / 0.16), transparent 40%),
+    radial-gradient(circle at 90% -10%, hsl(195 85% 34% / 0.1), transparent 36%);
 }
 
 code,
@@ -76,11 +80,26 @@ main {
   @apply animate-[fadeIn_180ms_ease-in-out];
 }
 
+.floating-enter {
+  animation: floatIn 420ms ease-out both;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
