@@ -70,6 +70,18 @@ export interface AppMessages {
     arch: string
     fedora: string
     debian: string
+    opensuse: string
+    alpine: string
+    ubuntu: string
+    kali: string
+    manjaro: string
+    mint: string
+    popos: string
+    zorin: string
+    parrot: string
+    endeavouros: string
+    garuda: string
+    nobara: string
     brandDescription: string
     manualNotice: string
     copyright: string
@@ -82,9 +94,33 @@ export interface AppMessages {
     archDescription: string
     fedoraDescription: string
     debianDescription: string
+    opensuseDescription: string
+    alpineDescription: string
+    ubuntuDescription: string
+    kaliDescription: string
+    manjaroDescription: string
+    mintDescription: string
+    poposDescription: string
+    zorinDescription: string
+    parrotDescription: string
+    endeavourosDescription: string
+    garudaDescription: string
+    nobaraDescription: string
     archLogoAlt: string
     fedoraLogoAlt: string
     debianLogoAlt: string
+    opensuseLogoAlt: string
+    alpineLogoAlt: string
+    ubuntuLogoAlt: string
+    kaliLogoAlt: string
+    manjaroLogoAlt: string
+    mintLogoAlt: string
+    poposLogoAlt: string
+    zorinLogoAlt: string
+    parrotLogoAlt: string
+    endeavourosLogoAlt: string
+    garudaLogoAlt: string
+    nobaraLogoAlt: string
   }
   distroPage: {
     seoTitleSuffix: string
@@ -214,6 +250,18 @@ export const translations: Record<Language, AppMessages> = {
       arch: 'Arch',
       fedora: 'Fedora',
       debian: 'Debian',
+      opensuse: 'openSUSE',
+      alpine: 'Alpine',
+      ubuntu: 'Ubuntu',
+      kali: 'Kali',
+      manjaro: 'Manjaro',
+      mint: 'Linux Mint',
+      popos: 'Pop!_OS',
+      zorin: 'Zorin',
+      parrot: 'Parrot',
+      endeavouros: 'EndeavourOS',
+      garuda: 'Garuda',
+      nobara: 'Nobara',
       brandDescription:
         'Lilite is a Linux command builder that helps you generate one grouped install command from official repositories for Arch-based, Debian-based, and Fedora-based systems.',
       manualNotice: 'Manual review and execution only. No auto-installation. No external repositories.',
@@ -222,15 +270,39 @@ export const translations: Record<Language, AppMessages> = {
     chooserPage: {
       seoTitle: 'Choose Distro Family',
       seoDescription:
-        'Select Arch, Fedora, or Debian family to build one grouped Linux install command with official repository package names.',
+        'Select your Linux distro family and build one grouped install command with the right package manager.',
       title: 'Choose Your Distro Family',
       description: 'Pick your distro family to generate package commands with the correct package manager and package names.',
       archDescription: 'Pacman workflow for Arch Linux and related distributions.',
       fedoraDescription: 'DNF workflow for Fedora and Fedora-like RPM systems.',
       debianDescription: 'Apt workflow for Debian, Ubuntu, and Debian derivatives.',
+      opensuseDescription: 'Zypper workflow for openSUSE and SUSE-compatible systems.',
+      alpineDescription: 'APK workflow for Alpine Linux and Alpine derivatives.',
+      ubuntuDescription: 'APT workflow for Ubuntu and Ubuntu-like systems.',
+      kaliDescription: 'APT workflow for Kali Linux and security-focused Debian derivatives.',
+      manjaroDescription: 'Pacman workflow for Manjaro and Arch-derived systems.',
+      mintDescription: 'APT workflow for Linux Mint and Ubuntu-derived systems.',
+      poposDescription: 'APT workflow for Pop!_OS and Ubuntu-derived systems.',
+      zorinDescription: 'APT workflow for Zorin OS and Ubuntu-derived systems.',
+      parrotDescription: 'APT workflow for Parrot Security and Debian-derived systems.',
+      endeavourosDescription: 'Pacman workflow for EndeavourOS and Arch-derived systems.',
+      garudaDescription: 'Pacman workflow for Garuda Linux and Arch-derived systems.',
+      nobaraDescription: 'DNF workflow for Nobara and Fedora-derived systems.',
       archLogoAlt: 'Arch Linux logo',
       fedoraLogoAlt: 'Fedora logo',
       debianLogoAlt: 'Debian logo',
+      opensuseLogoAlt: 'openSUSE logo',
+      alpineLogoAlt: 'Alpine Linux logo',
+      ubuntuLogoAlt: 'Ubuntu logo',
+      kaliLogoAlt: 'Kali Linux logo',
+      manjaroLogoAlt: 'Manjaro logo',
+      mintLogoAlt: 'Linux Mint logo',
+      poposLogoAlt: 'Pop!_OS logo',
+      zorinLogoAlt: 'Zorin logo',
+      parrotLogoAlt: 'Parrot logo',
+      endeavourosLogoAlt: 'EndeavourOS logo',
+      garudaLogoAlt: 'Garuda logo',
+      nobaraLogoAlt: 'Nobara logo',
     },
     distroPage: {
       seoTitleSuffix: 'Package Builder',
@@ -299,6 +371,83 @@ export const translations: Record<Language, AppMessages> = {
         description:
           'Fedora-based distributions use dnf. Pick useful official-repo packages and generate one clean grouped install command.',
         shortDescription: 'RPM-based systems powered by dnf and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'opensuse-based': {
+        title: 'openSUSE Family',
+        description:
+          'openSUSE-based distributions use zypper. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'RPM-based systems powered by zypper and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'alpine-based': {
+        title: 'Alpine Family',
+        description:
+          'Alpine-based distributions use apk. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Lightweight systems using apk and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'ubuntu-based': {
+        title: 'Ubuntu Family',
+        description:
+          'Ubuntu-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'kali-based': {
+        title: 'Kali Family',
+        description:
+          'Kali-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Security-focused systems using apt package management.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'manjaro-based': {
+        title: 'Manjaro Family',
+        description:
+          'Manjaro-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Arch-derived systems using pacman and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'mint-based': {
+        title: 'Linux Mint Family',
+        description: 'Linux Mint-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'popos-based': {
+        title: 'Pop!_OS Family',
+        description: 'Pop!_OS-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'zorin-based': {
+        title: 'Zorin Family',
+        description: 'Zorin-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'parrot-based': {
+        title: 'Parrot Family',
+        description: 'Parrot-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Security-focused Debian-derived systems using apt.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'endeavouros-based': {
+        title: 'EndeavourOS Family',
+        description: 'EndeavourOS-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Arch-derived systems using pacman and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'garuda-based': {
+        title: 'Garuda Family',
+        description: 'Garuda-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Arch-derived systems using pacman and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
+      'nobara-based': {
+        title: 'Nobara Family',
+        description: 'Nobara-based distributions use dnf. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Fedora-derived systems using dnf and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
     },
@@ -389,6 +538,18 @@ export const translations: Record<Language, AppMessages> = {
       arch: 'Arch',
       fedora: 'Fedora',
       debian: 'Debian',
+      opensuse: 'openSUSE',
+      alpine: 'Alpine',
+      ubuntu: 'Ubuntu',
+      kali: 'Kali',
+      manjaro: 'Manjaro',
+      mint: 'Linux Mint',
+      popos: 'Pop!_OS',
+      zorin: 'Zorin',
+      parrot: 'Parrot',
+      endeavouros: 'EndeavourOS',
+      garuda: 'Garuda',
+      nobara: 'Nobara',
       brandDescription:
         "Lilite est un générateur de commandes Linux qui vous aide à créer une seule commande d'installation groupée à partir des dépôts officiels pour les systèmes Arch-based, Debian-based et Fedora-based.",
       manualNotice: 'Vérification et exécution manuelles uniquement. Pas d’auto-installation. Aucun dépôt externe.',
@@ -397,15 +558,39 @@ export const translations: Record<Language, AppMessages> = {
     chooserPage: {
       seoTitle: 'Choisir une famille de distro',
       seoDescription:
-        "Choisissez Arch, Fedora ou Debian pour générer une seule commande Linux groupée avec les bons noms de paquets officiels.",
+        'Choisissez votre famille de distro Linux pour générer une seule commande groupée avec le bon gestionnaire de paquets.',
       title: 'Choisissez votre famille de distribution',
       description: 'Choisissez votre famille de distro pour générer des commandes avec le bon gestionnaire de paquets.',
       archDescription: 'Flux pacman pour Arch Linux et distributions associées.',
       fedoraDescription: 'Flux dnf pour Fedora et systèmes RPM similaires.',
       debianDescription: 'Flux apt pour Debian, Ubuntu et dérivées Debian.',
+      opensuseDescription: 'Flux zypper pour openSUSE et systèmes compatibles SUSE.',
+      alpineDescription: 'Flux apk pour Alpine Linux et distributions dérivées.',
+      ubuntuDescription: 'Flux apt pour Ubuntu et systèmes compatibles Ubuntu.',
+      kaliDescription: 'Flux apt pour Kali Linux et distributions Debian orientées sécurité.',
+      manjaroDescription: 'Flux pacman pour Manjaro et systèmes dérivés d’Arch.',
+      mintDescription: 'Flux apt pour Linux Mint et systèmes dérivés d’Ubuntu.',
+      poposDescription: 'Flux apt pour Pop!_OS et systèmes dérivés d’Ubuntu.',
+      zorinDescription: 'Flux apt pour Zorin OS et systèmes dérivés d’Ubuntu.',
+      parrotDescription: 'Flux apt pour Parrot Security et systèmes dérivés de Debian.',
+      endeavourosDescription: 'Flux pacman pour EndeavourOS et systèmes dérivés d’Arch.',
+      garudaDescription: 'Flux pacman pour Garuda Linux et systèmes dérivés d’Arch.',
+      nobaraDescription: 'Flux dnf pour Nobara et systèmes dérivés de Fedora.',
       archLogoAlt: 'Logo Arch Linux',
       fedoraLogoAlt: 'Logo Fedora',
       debianLogoAlt: 'Logo Debian',
+      opensuseLogoAlt: 'Logo openSUSE',
+      alpineLogoAlt: 'Logo Alpine Linux',
+      ubuntuLogoAlt: 'Logo Ubuntu',
+      kaliLogoAlt: 'Logo Kali Linux',
+      manjaroLogoAlt: 'Logo Manjaro',
+      mintLogoAlt: 'Logo Linux Mint',
+      poposLogoAlt: 'Logo Pop!_OS',
+      zorinLogoAlt: 'Logo Zorin',
+      parrotLogoAlt: 'Logo Parrot',
+      endeavourosLogoAlt: 'Logo EndeavourOS',
+      garudaLogoAlt: 'Logo Garuda',
+      nobaraLogoAlt: 'Logo Nobara',
     },
     distroPage: {
       seoTitleSuffix: 'Générateur de paquets',
@@ -474,6 +659,90 @@ export const translations: Record<Language, AppMessages> = {
         description:
           'Les distributions Fedora-based utilisent dnf. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes RPM utilisant dnf et les dépôts officiels.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'opensuse-based': {
+        title: 'openSUSE-based',
+        description:
+          'Les distributions openSUSE-based utilisent zypper. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes RPM utilisant zypper et les dépôts officiels.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'alpine-based': {
+        title: 'Alpine-based',
+        description:
+          'Les distributions Alpine-based utilisent apk. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes légers utilisant apk et les dépôts officiels.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'ubuntu-based': {
+        title: 'Ubuntu-based',
+        description:
+          'Les distributions Ubuntu-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes basés sur Ubuntu utilisant apt et les dépôts officiels.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'kali-based': {
+        title: 'Kali-based',
+        description:
+          'Les distributions Kali-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes orientés sécurité utilisant apt.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'manjaro-based': {
+        title: 'Manjaro-based',
+        description:
+          'Les distributions Manjaro-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'mint-based': {
+        title: 'Mint-based',
+        description:
+          'Les distributions Mint-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Ubuntu utilisant apt.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'popos-based': {
+        title: 'Pop!_OS-based',
+        description:
+          'Les distributions Pop!_OS-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Ubuntu utilisant apt.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'zorin-based': {
+        title: 'Zorin-based',
+        description:
+          'Les distributions Zorin-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Ubuntu utilisant apt.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'parrot-based': {
+        title: 'Parrot-based',
+        description:
+          'Les distributions Parrot-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes orientés sécurité dérivés de Debian.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'endeavouros-based': {
+        title: 'EndeavourOS-based',
+        description:
+          'Les distributions EndeavourOS-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'garuda-based': {
+        title: 'Garuda-based',
+        description:
+          'Les distributions Garuda-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'nobara-based': {
+        title: 'Nobara-based',
+        description:
+          'Les distributions Nobara-based utilisent dnf. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés de Fedora utilisant dnf.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
     },

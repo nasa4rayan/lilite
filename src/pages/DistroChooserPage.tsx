@@ -9,6 +9,18 @@ import { useSEO } from '@/hooks/useSEO'
 
 export function DistroChooserPage() {
   const { messages } = useLanguage()
+  const opensuseLogo = 'https://cdn.simpleicons.org/opensuse'
+  const alpineLogo = 'https://cdn.simpleicons.org/alpinelinux'
+  const ubuntuLogo = 'https://cdn.simpleicons.org/ubuntu'
+  const kaliLogo = 'https://cdn.simpleicons.org/kalilinux'
+  const manjaroLogo = 'https://cdn.simpleicons.org/manjaro'
+  const mintLogo = 'https://cdn.simpleicons.org/linuxmint'
+  const poposLogo = 'https://cdn.simpleicons.org/popos'
+  const zorinLogo = 'https://cdn.simpleicons.org/zorin'
+  const parrotLogo = 'https://cdn.simpleicons.org/parrotsecurity'
+  const endeavourosLogo = 'https://cdn.simpleicons.org/endeavouros'
+  const garudaLogo = 'https://cdn.simpleicons.org/garuda'
+  const nobaraLogo = 'https://cdn.simpleicons.org/fedora'
 
   useSEO({
     title: messages.chooserPage.seoTitle,
@@ -24,6 +36,11 @@ export function DistroChooserPage() {
         action={<BackButton />}
         as="h1"
       />
+      <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border bg-card/70 p-3 text-xs text-muted-foreground">
+        <span className="rounded-full border bg-background px-2 py-1 font-medium text-foreground">15 distro families</span>
+        <span className="rounded-full border bg-background px-2 py-1 font-medium text-foreground">apt / pacman / yay / dnf / zypper / apk</span>
+        <span>Pick once, generate clean commands instantly.</span>
+      </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <DistroCard
           to="/distro/arch-based"
@@ -31,6 +48,7 @@ export function DistroChooserPage() {
           description={messages.chooserPage.archDescription}
           logoSrc={archLogo}
           logoAlt={messages.chooserPage.archLogoAlt}
+          manager="pacman"
         />
         <DistroCard
           to="/distro/fedora-based"
@@ -38,6 +56,7 @@ export function DistroChooserPage() {
           description={messages.chooserPage.fedoraDescription}
           logoSrc={fedoraLogo}
           logoAlt={messages.chooserPage.fedoraLogoAlt}
+          manager="dnf"
         />
         <DistroCard
           to="/distro/debian-based"
@@ -45,6 +64,103 @@ export function DistroChooserPage() {
           description={messages.chooserPage.debianDescription}
           logoSrc={debianLogo}
           logoAlt={messages.chooserPage.debianLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/opensuse-based"
+          title="openSUSE"
+          description={messages.chooserPage.opensuseDescription}
+          logoSrc={opensuseLogo}
+          logoAlt={messages.chooserPage.opensuseLogoAlt}
+          manager="zypper"
+        />
+        <DistroCard
+          to="/distro/alpine-based"
+          title="Alpine"
+          description={messages.chooserPage.alpineDescription}
+          logoSrc={alpineLogo}
+          logoAlt={messages.chooserPage.alpineLogoAlt}
+          manager="apk"
+        />
+        <DistroCard
+          to="/distro/ubuntu-based"
+          title="Ubuntu"
+          description={messages.chooserPage.ubuntuDescription}
+          logoSrc={ubuntuLogo}
+          logoAlt={messages.chooserPage.ubuntuLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/kali-based"
+          title="Kali"
+          description={messages.chooserPage.kaliDescription}
+          logoSrc={kaliLogo}
+          logoAlt={messages.chooserPage.kaliLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/manjaro-based"
+          title="Manjaro"
+          description={messages.chooserPage.manjaroDescription}
+          logoSrc={manjaroLogo}
+          logoAlt={messages.chooserPage.manjaroLogoAlt}
+          manager="pacman / yay"
+        />
+        <DistroCard
+          to="/distro/mint-based"
+          title="Linux Mint"
+          description={messages.chooserPage.mintDescription}
+          logoSrc={mintLogo}
+          logoAlt={messages.chooserPage.mintLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/popos-based"
+          title="Pop!_OS"
+          description={messages.chooserPage.poposDescription}
+          logoSrc={poposLogo}
+          logoAlt={messages.chooserPage.poposLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/zorin-based"
+          title="Zorin"
+          description={messages.chooserPage.zorinDescription}
+          logoSrc={zorinLogo}
+          logoAlt={messages.chooserPage.zorinLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/parrot-based"
+          title="Parrot"
+          description={messages.chooserPage.parrotDescription}
+          logoSrc={parrotLogo}
+          logoAlt={messages.chooserPage.parrotLogoAlt}
+          manager="apt"
+        />
+        <DistroCard
+          to="/distro/endeavouros-based"
+          title="EndeavourOS"
+          description={messages.chooserPage.endeavourosDescription}
+          logoSrc={endeavourosLogo}
+          logoAlt={messages.chooserPage.endeavourosLogoAlt}
+          manager="pacman / yay"
+        />
+        <DistroCard
+          to="/distro/garuda-based"
+          title="Garuda"
+          description={messages.chooserPage.garudaDescription}
+          logoSrc={garudaLogo}
+          logoAlt={messages.chooserPage.garudaLogoAlt}
+          manager="pacman / yay"
+        />
+        <DistroCard
+          to="/distro/nobara-based"
+          title="Nobara"
+          description={messages.chooserPage.nobaraDescription}
+          logoSrc={nobaraLogo}
+          logoAlt={messages.chooserPage.nobaraLogoAlt}
+          manager="dnf"
         />
       </div>
     </main>

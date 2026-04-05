@@ -58,6 +58,66 @@ export function Footer() {
                     {messages.footer.debian}
                   </Link>
                 </li>
+                <li>
+                  <Link to="/distro/opensuse-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.opensuse}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/alpine-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.alpine}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/ubuntu-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.ubuntu}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/kali-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.kali}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/manjaro-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.manjaro}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/mint-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.mint}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/popos-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.popos}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/zorin-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.zorin}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/parrot-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.parrot}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/endeavouros-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.endeavouros}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/garuda-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.garuda}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/distro/nobara-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.nobara}
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>

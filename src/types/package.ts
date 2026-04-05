@@ -9,7 +9,22 @@ export type Category =
   | 'Terminals'
   | 'Others'
 
-export type DistroFamily = 'arch-based' | 'debian-based' | 'fedora-based'
+export type DistroFamily =
+  | 'arch-based'
+  | 'debian-based'
+  | 'fedora-based'
+  | 'opensuse-based'
+  | 'alpine-based'
+  | 'ubuntu-based'
+  | 'kali-based'
+  | 'manjaro-based'
+  | 'mint-based'
+  | 'popos-based'
+  | 'zorin-based'
+  | 'parrot-based'
+  | 'endeavouros-based'
+  | 'garuda-based'
+  | 'nobara-based'
 
 export interface PackageItem {
   id: string

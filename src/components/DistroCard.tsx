@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '@/hooks/useLanguage'
@@ -9,17 +10,35 @@ interface DistroCardProps {
   description: string
   logoSrc: string
   logoAlt: string
+  manager: string
 }
 
-export function DistroCard({ to, title, description, logoSrc, logoAlt }: DistroCardProps) {
+export function DistroCard({ to, title, description, logoSrc, logoAlt, manager }: DistroCardProps) {
   const { messages } = useLanguage()
+  const [logoLoadFailed, setLogoLoadFailed] = useState(false)
+  const shortTitle = useMemo(() => title.replace(/[^a-zA-Z0-9]/g, '').slice(0, 2).toUpperCase(), [title])
 
   return (
     <Link to={to} className="group block">
       <Card className="h-full rounded-2xl border bg-card/80 shadow-sm transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/45 group-hover:shadow-md">
         <CardHeader className="p-4 sm:p-5">
-          <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl border bg-secondary/60 p-2">
-            <img src={logoSrc} alt={logoAlt} className="h-8 w-8 object-contain" loading="lazy" />
+          <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl border bg-secondary/60 p-2 shadow-sm">
+            {logoLoadFailed ? (
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary/25 to-emerald-300/30 text-xs font-bold text-foreground">
+                {shortTitle}
+              </span>
+            ) : (
+              <img
+                src={logoSrc}
+                alt={logoAlt}
+                className="h-8 w-8 object-contain"
+                loading="lazy"
+                onError={() => setLogoLoadFailed(true)}
+              />
+            )}
+          </div>
+          <div className="mb-1 inline-flex w-fit items-center rounded-full border bg-background/90 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+            {manager}
           </div>
           <CardTitle className="text-lg">{title}</CardTitle>
           <CardDescription className="leading-relaxed">{description}</CardDescription>
