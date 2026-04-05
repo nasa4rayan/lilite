@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { AlpinePage } from '@/pages/AlpinePage'
+import { Analytics } from '@vercel/analytics/react'
 import { Footer } from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
 import { ChatWidget } from '@/components/chat-widget'
@@ -52,6 +53,7 @@ export default function App() {
       </div>
       <ChatWidget />
       <Footer />
+      <Analytics />
     </div>
   )
 }
