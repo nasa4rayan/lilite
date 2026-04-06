@@ -18,12 +18,29 @@ interface NodeResponseLike {
   write: (chunk: Buffer | string) => void
 }
 
+const isPlainObject = (value: unknown): value is Record<string, unknown> => {
+  if (!value || Object.prototype.toString.call(value) !== '[object Object]') {
+    return false
+  }
+
+  const prototype = Object.getPrototypeOf(value)
+  return prototype === Object.prototype || prototype === null
+}
+
 const readBody = async (request: NodeRequestLike) => {
   if (typeof request.body === 'string') {
     return request.body
   }
 
-  if (request.body && typeof request.body === 'object') {
+  if (Buffer.isBuffer(request.body)) {
+    return request.body.toString('utf8')
+  }
+
+  if (request.body instanceof Uint8Array) {
+    return Buffer.from(request.body).toString('utf8')
+  }
+
+  if (Array.isArray(request.body) || isPlainObject(request.body)) {
     return JSON.stringify(request.body)
   }
 
@@ -85,28 +102,41 @@ const writeResponse = async (response: NodeResponseLike, webResponse: Response) 
 }
 
 export default async function handler(request: NodeRequestLike, response: NodeResponseLike) {
-  const host = Array.isArray(request.headers.host) ? request.headers.host[0] : request.headers.host
-  const protocolHeader = Array.isArray(request.headers['x-forwarded-proto'])
-    ? request.headers['x-forwarded-proto'][0]
-    : request.headers['x-forwarded-proto']
-  const protocol = protocolHeader || 'https'
-  const origin = `${protocol}://${host || 'www.lilite.site'}`
-  const body =
-    request.method === 'GET' || request.method === 'HEAD'
-      ? undefined
-      : await readBody(request)
+  try {
+    const host = Array.isArray(request.headers.host) ? request.headers.host[0] : request.headers.host
+    const protocolHeader = Array.isArray(request.headers['x-forwarded-proto'])
+      ? request.headers['x-forwarded-proto'][0]
+      : request.headers['x-forwarded-proto']
+    const protocol = protocolHeader || 'https'
+    const origin = `${protocol}://${host || 'www.lilite.site'}`
+    const body =
+      request.method === 'GET' || request.method === 'HEAD'
+        ? undefined
+        : await readBody(request)
 
-  const webRequest = new Request(new URL(request.url || '/api/chat', origin), {
-    method: request.method || 'GET',
-    headers: toHeaders(request.headers),
-    body,
-  })
+    const webRequest = new Request(new URL(request.url || '/api/chat', origin), {
+      method: request.method || 'GET',
+      headers: toHeaders(request.headers),
+      body,
+    })
 
-  const webResponse = await handleChatRequest(webRequest, {
-    apiKey: process.env.GROQ_API_KEY,
-    clientId: request.socket?.remoteAddress,
-    siteUrl: process.env.VITE_SITE_URL || origin,
-  })
+    const webResponse = await handleChatRequest(webRequest, {
+      apiKey: process.env.GROQ_API_KEY,
+      clientId: request.socket?.remoteAddress,
+      siteUrl: process.env.VITE_SITE_URL || origin,
+    })
 
-  await writeResponse(response, webResponse)
+    await writeResponse(response, webResponse)
+  } catch (error) {
+    console.error('Chat API wrapper failed:', error)
+    response.statusCode = 500
+    response.setHeader('Cache-Control', 'no-store')
+    response.setHeader('Content-Type', 'application/json; charset=utf-8')
+    response.setHeader('X-Content-Type-Options', 'nosniff')
+    response.end(
+      JSON.stringify({
+        error: 'Chat is temporarily unavailable. Please try again later.',
+      }),
+    )
+  }
 }
