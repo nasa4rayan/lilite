@@ -176,7 +176,6 @@ export interface AppMessages {
     toggleAria: string
     dialogAria: string
     title: string
-    statusBadge: string
     clearHistoryAria: string
     closeAria: string
     emptyState: string
@@ -392,7 +391,6 @@ export const translations: Record<Language, AppMessages> = {
       toggleAria: 'Toggle Lilo assistant',
       dialogAria: 'Lilo assistant',
       title: 'Lilo',
-      statusBadge: 'Under construction',
       clearHistoryAria: 'Reset chat',
       closeAria: 'Close Lilo',
       emptyState: 'Ask Lilo beginner-friendly Linux package questions.',
@@ -714,7 +712,6 @@ export const translations: Record<Language, AppMessages> = {
       toggleAria: "Afficher ou masquer l'assistant Lilo",
       dialogAria: 'Assistant Lilo',
       title: 'Lilo',
-      statusBadge: 'En construction',
       clearHistoryAria: 'Réinitialiser le chat',
       closeAria: 'Fermer Lilo',
       emptyState: 'Posez a Lilo des questions simples sur les paquets Linux.',
