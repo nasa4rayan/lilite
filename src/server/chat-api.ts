@@ -255,6 +255,7 @@ export const handleChatRequest = async (request: Request, options: ChatHandlerOp
 
   const apiKey = options.apiKey?.trim()
   if (!apiKey) {
+    console.error('Lilite chat API key is missing. Set GROQ_API_KEY or VITE_GROQ_API_KEY on the server runtime.')
     return jsonResponse(
       { error: 'Chat is temporarily unavailable. Please try again later.' },
       503,

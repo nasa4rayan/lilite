@@ -101,6 +101,12 @@ const writeResponse = async (response: NodeResponseLike, webResponse: Response) 
   response.end()
 }
 
+const resolveGroqApiKey = () =>
+  process.env.GROQ_API_KEY?.trim() ||
+  process.env.VITE_GROQ_API_KEY?.trim() ||
+  process.env.GROQ_KEY?.trim() ||
+  ''
+
 export default async function handler(request: NodeRequestLike, response: NodeResponseLike) {
   try {
     const host = Array.isArray(request.headers.host) ? request.headers.host[0] : request.headers.host
@@ -121,7 +127,7 @@ export default async function handler(request: NodeRequestLike, response: NodeRe
     })
 
     const webResponse = await handleChatRequest(webRequest, {
-      apiKey: process.env.GROQ_API_KEY,
+      apiKey: resolveGroqApiKey(),
       clientId: request.socket?.remoteAddress,
       siteUrl: process.env.VITE_SITE_URL || origin,
     })

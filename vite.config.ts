@@ -98,7 +98,7 @@ const chatApiDevPlugin = (groqApiKey: string, siteUrl: string) => ({
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const groqApiKey = env.GROQ_API_KEY ?? ''
+  const groqApiKey = env.GROQ_API_KEY ?? env.VITE_GROQ_API_KEY ?? env.GROQ_KEY ?? ''
   const siteUrl = (env.VITE_SITE_URL ?? 'http://localhost:5173').replace(/\/+$/, '')
 
   return {
