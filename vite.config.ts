@@ -102,7 +102,6 @@ export default defineConfig(({ mode }) => {
   const siteUrl = (env.VITE_SITE_URL ?? 'http://localhost:5173').replace(/\/+$/, '')
 
   return {
-    envPrefix: ['VITE_', 'GROQ_'],
     plugins: [react(), chatApiDevPlugin(groqApiKey, siteUrl)],
     resolve: {
       alias: {
