@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 const THEME_KEY = 'lilite-theme'
+const DEFAULT_THEME: Theme = 'light'
 
 function readTheme(): Theme {
   if (typeof window === 'undefined') {
-    return 'light'
+    return DEFAULT_THEME
   }
 
   const stored = window.localStorage.getItem(THEME_KEY)
-  return stored === 'dark' ? 'dark' : 'light'
+  return stored === 'dark' ? 'dark' : DEFAULT_THEME
 }
 
 export function useTheme() {

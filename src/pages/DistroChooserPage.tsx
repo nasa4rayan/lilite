@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { BackButton } from '@/components/BackButton'
 import { DistroCard } from '@/components/DistroCard'
 import { SectionHeader } from '@/components/SectionHeader'
@@ -6,6 +7,12 @@ import debianLogo from '@/assets/debian.png'
 import fedoraLogo from '@/assets/fedora.png'
 import { useLanguage } from '@/hooks/useLanguage'
 import { useSEO } from '@/hooks/useSEO'
+import { getSiteUrl } from '@/lib/site'
+import {
+  createBreadcrumbSchema,
+  createCollectionPageSchema,
+  createItemListSchema,
+} from '@/lib/structuredData'
 
 export function DistroChooserPage() {
   const { messages } = useLanguage()
@@ -21,11 +28,59 @@ export function DistroChooserPage() {
   const endeavourosLogo = 'https://cdn.simpleicons.org/endeavouros'
   const garudaLogo = 'https://cdn.simpleicons.org/garuda'
   const nobaraLogo = 'https://cdn.simpleicons.org/fedora'
+  const siteUrl = getSiteUrl()
+  const distroItems = useMemo(
+    () => [
+      { name: 'Arch', url: `${siteUrl}/distro/arch-based` },
+      { name: 'Fedora', url: `${siteUrl}/distro/fedora-based` },
+      { name: 'Debian', url: `${siteUrl}/distro/debian-based` },
+      { name: 'openSUSE', url: `${siteUrl}/distro/opensuse-based` },
+      { name: 'Alpine', url: `${siteUrl}/distro/alpine-based` },
+      { name: 'Ubuntu', url: `${siteUrl}/distro/ubuntu-based` },
+      { name: 'Kali', url: `${siteUrl}/distro/kali-based` },
+      { name: 'Manjaro', url: `${siteUrl}/distro/manjaro-based` },
+      { name: 'Linux Mint', url: `${siteUrl}/distro/mint-based` },
+      { name: 'Pop!_OS', url: `${siteUrl}/distro/popos-based` },
+      { name: 'Zorin', url: `${siteUrl}/distro/zorin-based` },
+      { name: 'Parrot', url: `${siteUrl}/distro/parrot-based` },
+      { name: 'EndeavourOS', url: `${siteUrl}/distro/endeavouros-based` },
+      { name: 'Garuda', url: `${siteUrl}/distro/garuda-based` },
+      { name: 'Nobara', url: `${siteUrl}/distro/nobara-based` },
+    ],
+    [siteUrl],
+  )
+  const structuredData = useMemo(
+    () => [
+      createCollectionPageSchema({
+        description: messages.chooserPage.seoDescription,
+        name: messages.chooserPage.title,
+        url: `${siteUrl}/get-started`,
+      }),
+      createBreadcrumbSchema([
+        { name: 'Lilite', url: `${siteUrl}/` },
+        { name: messages.chooserPage.title, url: `${siteUrl}/get-started` },
+      ]),
+      createItemListSchema({
+        items: distroItems,
+        name: messages.chooserPage.title,
+        url: `${siteUrl}/get-started`,
+      }),
+    ],
+    [distroItems, messages.chooserPage.seoDescription, messages.chooserPage.title, siteUrl],
+  )
 
   useSEO({
     title: messages.chooserPage.seoTitle,
     description: messages.chooserPage.seoDescription,
     pathname: '/get-started',
+    keywords: [
+      'linux distro chooser',
+      'linux distribution family',
+      'apt pacman dnf zypper apk',
+      'linux package manager selector',
+      'choose linux package manager',
+    ],
+    structuredData,
   })
 
   return (

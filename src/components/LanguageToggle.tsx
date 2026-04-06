@@ -6,7 +6,7 @@ export function LanguageToggle() {
 
   return (
     <Button variant="outline" size="sm" className="h-10 min-w-10 px-3" aria-label={messages.languageToggle.aria} onClick={toggleLanguage}>
-      {language === 'en' ? 'EN' : 'FR'}
+      {language === 'en' ? 'FR' : 'EN'}
     </Button>
   )
 }

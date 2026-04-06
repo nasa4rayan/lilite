@@ -27,7 +27,8 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
           <a
             href="https://github.com/med6ba/lilite"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
+            referrerPolicy="no-referrer"
             aria-label={messages.navbar.starAria}
             className="group inline-flex h-10 items-center gap-1 rounded-md border border-input bg-background px-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent hover:text-accent-foreground sm:px-3"
           >

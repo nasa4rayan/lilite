@@ -6,6 +6,11 @@ import { distroPackages, maintenanceCommands } from '@/data/packages'
 import { usePackageSelection } from '@/hooks/usePackageSelection'
 import { buildInstallCommand, supportsCommunityHelper } from '@/lib/commandBuilder'
 import { filterPackages } from '@/lib/filterPackages'
+import { getSiteUrl } from '@/lib/site'
+import {
+  createBreadcrumbSchema,
+  createCollectionPageSchema,
+} from '@/lib/structuredData'
 import { Category, DistroFamily } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -21,6 +26,24 @@ import { useSEO } from '@/hooks/useSEO'
 
 interface DistroFamilyPageProps {
   distro: DistroFamily
+}
+
+const distroManagerMap: Record<DistroFamily, string> = {
+  'alpine-based': 'apk',
+  'arch-based': 'pacman',
+  'debian-based': 'apt',
+  'endeavouros-based': 'pacman',
+  'fedora-based': 'dnf',
+  'garuda-based': 'pacman',
+  'kali-based': 'apt',
+  'manjaro-based': 'pacman',
+  'mint-based': 'apt',
+  'nobara-based': 'dnf',
+  'opensuse-based': 'zypper',
+  'parrot-based': 'apt',
+  'popos-based': 'apt',
+  'ubuntu-based': 'apt',
+  'zorin-based': 'apt',
 }
 
 export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
@@ -44,11 +67,42 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
     [distro, selectedPackages, useCommunityHelper],
   )
   const canUseCommunityHelper = supportsCommunityHelper(distro)
+  const siteUrl = getSiteUrl()
+  const pageUrl = `${siteUrl}/distro/${distro}`
+  const structuredData = useMemo(
+    () => [
+      createCollectionPageSchema({
+        description: messages.distroInfo[distro].description,
+        name: messages.distroInfo[distro].title,
+        url: pageUrl,
+      }),
+      createBreadcrumbSchema([
+        { name: 'Lilite', url: `${siteUrl}/` },
+        { name: messages.chooserPage.title, url: `${siteUrl}/get-started` },
+        { name: messages.distroInfo[distro].title, url: pageUrl },
+      ]),
+    ],
+    [
+      distro,
+      messages.chooserPage.title,
+      messages.distroInfo,
+      pageUrl,
+      siteUrl,
+    ],
+  )
 
   useSEO({
     title: `${messages.distroInfo[distro].title} ${messages.distroPage.seoTitleSuffix}`,
     description: messages.distroInfo[distro].description,
     pathname: `/distro/${distro}`,
+    keywords: [
+      `${messages.distroInfo[distro].title.toLowerCase()} linux package builder`,
+      `${distroManagerMap[distro]} install command`,
+      'linux package command builder',
+      'official repository packages',
+      `${messages.distroInfo[distro].title.toLowerCase()} package manager`,
+    ],
+    structuredData,
   })
 
   const handleGetLilite = () => {

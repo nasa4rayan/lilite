@@ -36,6 +36,7 @@ export function DistroCard({ to, title, description, logoSrc, logoAlt, manager }
                 alt={logoAlt}
                 className="h-8 w-8 object-contain"
                 loading="lazy"
+                referrerPolicy="no-referrer"
                 onError={() => setLogoLoadFailed(true)}
               />
             )}

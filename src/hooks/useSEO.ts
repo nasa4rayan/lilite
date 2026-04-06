@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { DEFAULT_OG_IMAGE_PATH, getSiteUrl, SITE_NAME, toAbsoluteUrl } from '@/lib/site'
+import { StructuredData } from '@/lib/structuredData'
 
 interface SEOOptions {
   title: string
@@ -7,10 +9,9 @@ interface SEOOptions {
   noindex?: boolean
   imagePath?: string
   type?: 'website' | 'article'
+  keywords?: string[]
+  structuredData?: StructuredData[]
 }
-
-const DEFAULT_SITE_URL = 'https://www.lilite.site'
-const DEFAULT_IMAGE_PATH = '/og-image.png'
 
 function upsertMetaByName(name: string, content: string) {
   let tag = document.head.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null
@@ -22,6 +23,10 @@ function upsertMetaByName(name: string, content: string) {
   }
 
   tag.setAttribute('content', content)
+}
+
+function removeMetaByName(name: string) {
+  document.head.querySelector(`meta[name="${name}"]`)?.remove()
 }
 
 function upsertMetaByProperty(property: string, content: string) {
@@ -48,33 +53,72 @@ function upsertCanonical(url: string) {
   link.setAttribute('href', url)
 }
 
-function toAbsoluteUrl(value: string, siteUrl: string) {
-  return new URL(value, siteUrl).toString()
+function syncStructuredData(items: StructuredData[]) {
+  document.head
+    .querySelectorAll('script[type="application/ld+json"][data-lilite-seo], script[type="application/ld+json"][data-lilite-static-seo]')
+    .forEach((node) => node.remove())
+
+  items.forEach((item, index) => {
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.dataset.liliteSeo = String(index)
+    script.text = JSON.stringify(item)
+    document.head.appendChild(script)
+  })
 }
 
-export function useSEO({ title, description, pathname, noindex = false, imagePath = DEFAULT_IMAGE_PATH, type = 'website' }: SEOOptions) {
+export function useSEO({
+  title,
+  description,
+  pathname,
+  noindex = false,
+  imagePath = DEFAULT_OG_IMAGE_PATH,
+  type = 'website',
+  keywords,
+  structuredData = [],
+}: SEOOptions) {
   useEffect(() => {
-    const siteUrl = ((import.meta.env.VITE_SITE_URL as string | undefined) ?? DEFAULT_SITE_URL).replace(/\/+$/, '')
-    const titleWithBrand = title.includes('Lilite') ? title : `${title} | Lilite`
+    const siteUrl = getSiteUrl()
+    const titleWithBrand = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`
     const currentPath = pathname ?? window.location.pathname
     const normalizedPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
     const canonicalUrl = new URL(normalizedPath, siteUrl).toString()
     const imageUrl = toAbsoluteUrl(imagePath, siteUrl)
+    const robotsContent = noindex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+    const language = document.documentElement.lang === 'fr' ? 'fr' : 'en'
+    const locale = language === 'fr' ? 'fr_FR' : 'en_US'
 
     document.title = titleWithBrand
     upsertMetaByName('description', description)
-    upsertMetaByName('robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large')
-    upsertMetaByProperty('og:site_name', 'Lilite')
+    upsertMetaByName('application-name', SITE_NAME)
+    upsertMetaByName('apple-mobile-web-app-title', SITE_NAME)
+    upsertMetaByName('googlebot', robotsContent)
+    upsertMetaByName('robots', robotsContent)
+    upsertMetaByProperty('og:locale', locale)
+    upsertMetaByProperty('og:site_name', SITE_NAME)
     upsertMetaByProperty('og:type', type)
     upsertMetaByProperty('og:title', titleWithBrand)
     upsertMetaByProperty('og:description', description)
     upsertMetaByProperty('og:url', canonicalUrl)
     upsertMetaByProperty('og:image', imageUrl)
+    upsertMetaByProperty('og:image:width', '1200')
+    upsertMetaByProperty('og:image:height', '630')
     upsertMetaByProperty('og:image:alt', 'Lilite Linux command builder preview')
     upsertMetaByName('twitter:card', 'summary_large_image')
     upsertMetaByName('twitter:title', titleWithBrand)
     upsertMetaByName('twitter:description', description)
     upsertMetaByName('twitter:image', imageUrl)
+    upsertMetaByName('twitter:image:alt', 'Lilite Linux command builder preview')
     upsertCanonical(canonicalUrl)
-  }, [description, imagePath, noindex, pathname, title, type])
+
+    if (keywords?.length) {
+      upsertMetaByName('keywords', keywords.join(', '))
+    } else {
+      removeMetaByName('keywords')
+    }
+
+    syncStructuredData(structuredData)
+  }, [description, imagePath, keywords, noindex, pathname, structuredData, title, type])
 }

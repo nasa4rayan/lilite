@@ -135,6 +135,110 @@ main {
   animation: floatIn 420ms ease-out both;
 }
 
+.chat-scrollbar {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, hsl(var(--border)), hsl(var(--muted-foreground) / 0.45));
+  border: 3px solid transparent;
+  border-radius: 9999px;
+  background-clip: padding-box;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, hsl(var(--primary) / 0.55), hsl(var(--muted-foreground) / 0.7));
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.lilo-launcher-bubble {
+  position: relative;
+  max-width: 15.75rem;
+  min-width: 13.75rem;
+  border-radius: 1.35rem;
+  border: 1px solid hsl(var(--border) / 0.9);
+  background:
+    linear-gradient(145deg, hsl(var(--background) / 0.98), hsl(var(--muted) / 0.92)),
+    radial-gradient(circle at top right, hsl(var(--primary) / 0.14), transparent 42%);
+  padding: 1rem 1rem 0.95rem;
+  transform-origin: 100% calc(100% - 1.1rem);
+  animation: liloBubbleIn 540ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.lilo-launcher-bubble::after {
+  content: '';
+  position: absolute;
+  right: -0.35rem;
+  bottom: 1.15rem;
+  height: 0.85rem;
+  width: 0.85rem;
+  rotate: 45deg;
+  border-right: 1px solid hsl(var(--border) / 0.9);
+  border-bottom: 1px solid hsl(var(--border) / 0.9);
+  background: hsl(var(--muted) / 0.96);
+}
+
+.lilo-launcher-bubble__title {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background: hsl(var(--primary) / 0.12);
+  color: hsl(var(--primary));
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  padding: 0.32rem 0.55rem;
+  text-transform: uppercase;
+}
+
+.lilo-launcher-bubble__text {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.45rem;
+  color: hsl(var(--foreground));
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.lilo-launcher-attention {
+  animation: liloLauncherBob 2.8s ease-in-out infinite;
+}
+
+.lilo-launcher-ring {
+  animation: liloRingPulse 1.9s ease-out infinite;
+}
+
+.lilo-glow-pulse {
+  animation: liloGlowPulse 2.6s ease-in-out infinite;
+}
+
+.lilo-shell-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 18%, hsl(0 0% 100% / 0.24), transparent 60%);
+  animation: liloShimmer 3.4s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -146,6 +250,14 @@ main {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .lilo-launcher-bubble,
+  .lilo-launcher-attention,
+  .lilo-launcher-ring,
+  .lilo-glow-pulse,
+  .lilo-shell-shimmer::after {
+    animation: none !important;
   }
 }
 
@@ -166,5 +278,75 @@ main {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes liloBubbleIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateX(28px) translateY(8px) scale(0.72);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(-2px) translateY(-1px) scale(1.02);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes liloLauncherBob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  10% {
+    transform: translateY(-3px) rotate(-2deg);
+  }
+  20% {
+    transform: translateY(0) rotate(1deg);
+  }
+  30% {
+    transform: translateY(-4px) rotate(0deg);
+  }
+  40% {
+    transform: translateY(0) rotate(2deg);
+  }
+}
+
+@keyframes liloRingPulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.9);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes liloGlowPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes liloShimmer {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(140%);
   }
 }

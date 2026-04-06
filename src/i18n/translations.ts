@@ -180,11 +180,13 @@ export interface AppMessages {
     closeAria: string
     emptyState: string
     assistantTyping: string
+    jumpToLatest: string
+    jumpToLatestAria: string
+    launcherHint: string
     inputPlaceholder: string
     inputAria: string
     sendAria: string
     errors: {
-      missingApiKey: string
       noResponseBody: string
       fetchFailed: string
     }
@@ -386,20 +388,22 @@ export const translations: Record<Language, AppMessages> = {
       reviewMessage: 'Review this command carefully before running it in your terminal.',
     },
     chatWidget: {
-      toggleAria: 'Toggle AI chat',
-      dialogAria: 'Lilite AI Assistant',
-      title: 'Lilite AI Assistant',
-      clearHistoryAria: 'Clear chat history',
-      closeAria: 'Close AI chat',
-      emptyState: 'Ask beginner-friendly Linux package questions.',
-      assistantTyping: 'Assistant is typing...',
+      toggleAria: 'Toggle Lilo assistant',
+      dialogAria: 'Lilo assistant',
+      title: 'Lilo',
+      clearHistoryAria: 'Reset chat',
+      closeAria: 'Close Lilo',
+      emptyState: 'Ask Lilo beginner-friendly Linux package questions.',
+      assistantTyping: 'Lilo is typing...',
+      jumpToLatest: 'Latest',
+      jumpToLatestAria: 'Scroll to the latest messages',
+      launcherHint: 'Start chatting about Linux',
       inputPlaceholder: 'Type your message...',
       inputAria: 'Chat input',
       sendAria: 'Send message',
       errors: {
-        missingApiKey: 'Set your Groq API key in src/config/groq.ts before using chat.',
-        noResponseBody: 'No response body from Groq.',
-        fetchFailed: 'Unable to fetch AI response.',
+        noResponseBody: 'No response body from the server.',
+        fetchFailed: 'Unable to fetch the assistant response.',
       },
     },
     categories: {
@@ -705,19 +709,21 @@ export const translations: Record<Language, AppMessages> = {
       reviewMessage: "Vérifiez attentivement cette commande avant de l'exécuter dans votre terminal.",
     },
     chatWidget: {
-      toggleAria: 'Afficher ou masquer le chat IA',
-      dialogAria: 'Assistant IA Lilite',
-      title: 'Assistant IA Lilite',
-      clearHistoryAria: "Effacer l'historique du chat",
-      closeAria: 'Fermer le chat IA',
-      emptyState: 'Posez des questions de niveau débutant sur les paquets Linux.',
-      assistantTyping: "L'assistant est en train d'écrire...",
+      toggleAria: "Afficher ou masquer l'assistant Lilo",
+      dialogAria: 'Assistant Lilo',
+      title: 'Lilo',
+      clearHistoryAria: 'Réinitialiser le chat',
+      closeAria: 'Fermer Lilo',
+      emptyState: 'Posez a Lilo des questions simples sur les paquets Linux.',
+      assistantTyping: 'Lilo est en train de répondre...',
+      jumpToLatest: 'Récent',
+      jumpToLatestAria: 'Aller aux derniers messages',
+      launcherHint: 'Commencer a parler de Linux',
       inputPlaceholder: 'Écrivez votre message...',
       inputAria: 'Saisie du chat',
       sendAria: 'Envoyer le message',
       errors: {
-        missingApiKey: "Configurez votre clé API Groq dans src/config/groq.ts avant d'utiliser le chat.",
-        noResponseBody: 'Aucune réponse reçue de Groq.',
+        noResponseBody: "Aucune réponse n'a été reçue du serveur.",
         fetchFailed: "Impossible de récupérer la réponse de l'assistant.",
       },
     },

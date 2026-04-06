@@ -61,6 +61,7 @@ export function PackageCard({ pkg, checked, onToggle }: PackageCardProps) {
               className="h-6 w-6 object-contain"
               loading="lazy"
               decoding="async"
+              referrerPolicy="no-referrer"
               aria-hidden="true"
               onError={() => setLogoIndex((current) => current + 1)}
             />
