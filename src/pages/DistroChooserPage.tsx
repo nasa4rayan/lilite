@@ -37,9 +37,13 @@ export function DistroChooserPage() {
         as="h1"
       />
       <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border bg-card/70 p-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center">
-        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">15 distro families</span>
-        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">apt / pacman / yay / dnf / zypper / apk</span>
-        <span>Pick once, generate clean commands instantly.</span>
+        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">
+          {messages.chooserPage.totalFamiliesBadge}
+        </span>
+        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">
+          {messages.chooserPage.packageManagersBadge}
+        </span>
+        <span>{messages.chooserPage.summaryNote}</span>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <DistroCard

@@ -120,8 +120,8 @@ export function HomePage() {
       <section aria-labelledby="linux-community" className="py-6 sm:py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
           <SectionHeader
-            title="Built With Linux Community Spirit"
-            description="A richer visual catalog inspired by the open-source ecosystem and the apps people use every day."
+            title={messages.home.communitySectionTitle}
+            description={messages.home.communitySectionDescription}
             id="linux-community"
           />
 
@@ -132,7 +132,7 @@ export function HomePage() {
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/12 ring-1 ring-primary/20">
                     <Users className="h-4 w-4 text-primary" />
                   </span>
-                  Linux Community
+                  {messages.home.linuxCommunityTitle}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -153,7 +153,7 @@ export function HomePage() {
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/12 ring-1 ring-primary/20">
                     <Layers3 className="h-4 w-4 text-primary" />
                   </span>
-                  Popular App Pack
+                  {messages.home.popularAppsTitle}
                 </CardTitle>
               </CardHeader>
               <CardContent>

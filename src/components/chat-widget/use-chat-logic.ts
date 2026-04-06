@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { GROQ_API_KEY, GROQ_API_URL, GROQ_DEFAULT_MODEL } from '@/config/groq'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface ChatMessage {
   id: string
@@ -54,6 +55,7 @@ const sanitizeText = (value: string) => {
 }
 
 export const useChatLogic = (): UseChatLogicResult => {
+  const { messages: appMessages } = useLanguage()
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -73,7 +75,7 @@ export const useChatLogic = (): UseChatLogicResult => {
       }
 
       if (!apiKey || apiKey === 'REPLACE_WITH_YOUR_GROQ_API_KEY') {
-        setError('Set your Groq API key in src/config/groq.ts before using chat.')
+        setError(appMessages.chatWidget.errors.missingApiKey)
         return
       }
 
@@ -123,7 +125,7 @@ export const useChatLogic = (): UseChatLogicResult => {
         }
 
         if (!response.body) {
-          throw new Error('No response body from Groq.')
+          throw new Error(appMessages.chatWidget.errors.noResponseBody)
         }
 
         const reader = response.body.getReader()
@@ -176,16 +178,16 @@ export const useChatLogic = (): UseChatLogicResult => {
           )
         }
       } catch (chatError) {
-        const message = chatError instanceof Error ? chatError.message : 'Unable to fetch AI response.'
+        const message = chatError instanceof Error ? chatError.message : appMessages.chatWidget.errors.fetchFailed
         setError(message)
         setMessages((current) =>
-          current.map((item) => (item.id === assistantMessageId ? { ...item, content: `Error: ${message}` } : item)),
+          current.map((item) => (item.id === assistantMessageId ? { ...item, content: message } : item)),
         )
       } finally {
         setIsLoading(false)
       }
     },
-    [isLoading, messages],
+    [appMessages.chatWidget.errors.fetchFailed, appMessages.chatWidget.errors.missingApiKey, appMessages.chatWidget.errors.noResponseBody, isLoading, messages],
   )
 
   return useMemo(

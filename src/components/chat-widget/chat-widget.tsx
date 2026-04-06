@@ -8,11 +8,13 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [draft, setDraft] = useState('')
   const viewportRef = useRef<HTMLDivElement>(null)
+  const { messages: appMessages } = useLanguage()
   const { clearMessages, error, isLoading, messages, sendMessage } = useChatLogic()
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export const ChatWidget = () => {
           className="h-12 w-12 rounded-full shadow-lg"
           size="sm"
           onClick={() => setIsOpen((value) => !value)}
-          aria-label="Toggle AI chat"
+          aria-label={appMessages.chatWidget.toggleAria}
           aria-expanded={isOpen}
           aria-controls="lilite-chat-dialog"
         >
@@ -60,7 +62,7 @@ export const ChatWidget = () => {
         id="lilite-chat-dialog"
         role="dialog"
         aria-modal={isOpen}
-        aria-label="Lilite AI Assistant"
+        aria-label={appMessages.chatWidget.dialogAria}
         className={[
           'fixed z-50 border-border bg-card/95 shadow-2xl backdrop-blur-sm',
           'inset-0 h-[100dvh] rounded-none md:inset-auto md:bottom-20 md:right-4 md:h-[36rem] md:w-[24rem] md:rounded-2xl',
@@ -73,13 +75,25 @@ export const ChatWidget = () => {
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/15">
               <Bot className="h-4 w-4 text-primary" />
             </span>
-            <p className="text-sm font-semibold text-foreground">Lilite AI Assistant</p>
+            <p className="text-sm font-semibold text-foreground">{appMessages.chatWidget.title}</p>
           </div>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="h-9 px-2 text-xs" onClick={clearMessages} aria-label="Clear chat history">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-9 px-2 text-xs"
+              onClick={clearMessages}
+              aria-label={appMessages.chatWidget.clearHistoryAria}
+            >
               <Trash2 className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="h-9 px-2 text-xs" onClick={() => setIsOpen(false)} aria-label="Close AI chat">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-9 px-2 text-xs"
+              onClick={() => setIsOpen(false)}
+              aria-label={appMessages.chatWidget.closeAria}
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -89,12 +103,12 @@ export const ChatWidget = () => {
           <div className="space-y-2 pb-1" aria-live="polite" aria-busy={isLoading}>
             {messages.length === 0 ? (
               <Card className="rounded-xl border-dashed bg-muted/40 p-3 text-sm text-muted-foreground shadow-none">
-                Ask beginner Linux package questions.
+                {appMessages.chatWidget.emptyState}
               </Card>
             ) : (
               messages.map((message) => <ChatMessageBubble key={message.id} message={message} />)
             )}
-            {isLoading ? <p className="text-xs text-muted-foreground">Assistant is typing...</p> : null}
+            {isLoading ? <p className="text-xs text-muted-foreground">{appMessages.chatWidget.assistantTyping}</p> : null}
             {error ? <p className="text-xs text-destructive">{error}</p> : null}
           </div>
         </ScrollArea>
@@ -104,12 +118,12 @@ export const ChatWidget = () => {
             <Input
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              placeholder="Type your message..."
+              placeholder={appMessages.chatWidget.inputPlaceholder}
               disabled={isLoading}
-              aria-label="Chat input"
+              aria-label={appMessages.chatWidget.inputAria}
               className="h-10"
             />
-            <Button type="submit" size="sm" disabled={isLoading || !draft.trim()} aria-label="Send message">
+            <Button type="submit" size="sm" disabled={isLoading || !draft.trim()} aria-label={appMessages.chatWidget.sendAria}>
               <Send className="h-4 w-4" />
             </Button>
           </div>

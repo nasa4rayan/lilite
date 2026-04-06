@@ -22,14 +22,16 @@ import { ParrotPage } from '@/pages/ParrotPage'
 import { PopOsPage } from '@/pages/PopOsPage'
 import { UbuntuPage } from '@/pages/UbuntuPage'
 import { ZorinPage } from '@/pages/ZorinPage'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function App() {
   const { theme, toggleTheme } = useTheme()
+  const { messages } = useLanguage()
 
   return (
     <div className="flex min-h-screen flex-col">
       <a href="#main-content" className="skip-link">
-        Skip to content
+        {messages.common.skipToContent}
       </a>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <div id="main-content" tabIndex={-1} className="flex-1 overflow-x-hidden focus:outline-none">

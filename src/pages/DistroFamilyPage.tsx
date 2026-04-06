@@ -90,7 +90,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
             {messages.distroPage.selected}: {selectedCount}
           </Badge>
           {canUseCommunityHelper ? (
-            <div className="inline-flex flex-wrap items-center gap-1 rounded-lg border bg-card p-1" role="group" aria-label="Package source mode">
+            <div className="inline-flex flex-wrap items-center gap-1 rounded-lg border bg-card p-1" role="group" aria-label={messages.distroPage.sourceModeAria}>
               <button
                 type="button"
                 onClick={() => setUseCommunityHelper(false)}
@@ -99,7 +99,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
                   !useCommunityHelper ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Official
+                {messages.distroPage.officialSourceLabel}
               </button>
               <button
                 type="button"
@@ -109,7 +109,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
                   useCommunityHelper ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Community (yay)
+                {messages.distroPage.communitySourceLabel}
               </button>
             </div>
           ) : null}
@@ -117,7 +117,7 @@ export function DistroFamilyPage({ distro }: DistroFamilyPageProps) {
 
         {canUseCommunityHelper ? (
           <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
-            Community mode uses <code>yay -S</code> for easier installs of apps like Steam/Discord on Arch-family distros.
+            {messages.distroPage.communityModeHint}
           </p>
         ) : null}
 
