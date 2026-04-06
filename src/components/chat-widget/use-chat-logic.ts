@@ -22,9 +22,12 @@ interface UseChatLogicResult {
 const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 const CHAT_MODEL = 'llama-3.3-70b-versatile'
 const CLIENT_GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const clientEnv = import.meta.env as Record<string, string | boolean | undefined>
 const CLIENT_GROQ_API_KEY =
-  (import.meta.env.VITE_GROQ_API_KEY as string | undefined)?.trim() ||
-  (import.meta.env.VITE_GROQ_KEY as string | undefined)?.trim() ||
+  (typeof clientEnv.GROQ_API_KEY === 'string' ? clientEnv.GROQ_API_KEY : undefined)?.trim() ||
+  (typeof clientEnv.VITE_GROQ_API_KEY === 'string' ? clientEnv.VITE_GROQ_API_KEY : undefined)?.trim() ||
+  (typeof clientEnv.GROQ_KEY === 'string' ? clientEnv.GROQ_KEY : undefined)?.trim() ||
+  (typeof clientEnv.VITE_GROQ_KEY === 'string' ? clientEnv.VITE_GROQ_KEY : undefined)?.trim() ||
   ''
 const CLIENT_SYSTEM_PROMPT = `
 You are Lilite Assistant, a beginner-friendly Linux package helper for the Lilite website.
