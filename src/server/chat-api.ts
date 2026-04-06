@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk'
-import { sanitizeText } from '../lib/sanitizeText'
+import { sanitizeText } from '../lib/sanitizeText.js'
 
 export interface ChatMessage {
   content: string

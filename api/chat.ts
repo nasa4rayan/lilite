@@ -1,4 +1,4 @@
-import { handleChatRequest } from '../src/server/chat-api'
+import { handleChatRequest } from '../src/server/chat-api.js'
 
 interface NodeRequestLike {
   body?: unknown
