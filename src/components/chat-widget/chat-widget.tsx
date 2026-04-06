@@ -178,7 +178,12 @@ export const ChatWidget = () => {
           <div className="flex min-w-0 items-center gap-3">
             <LiloAvatar size="md" pulse={isLoading} />
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold tracking-tight text-foreground">{appMessages.chatWidget.title}</p>
+              <div className="flex flex-wrap items-center gap-1.5">
+                <p className="truncate text-sm font-semibold tracking-tight text-foreground">{appMessages.chatWidget.title}</p>
+                <span className="inline-flex items-center rounded-full border border-amber-500/25 bg-amber-500/12 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-300">
+                  {appMessages.chatWidget.statusBadge}
+                </span>
+              </div>
               <p className="truncate text-[11px] font-medium text-muted-foreground">
                 {appMessages.chatWidget.launcherHint}
               </p>
