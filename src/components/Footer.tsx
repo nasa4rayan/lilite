@@ -118,6 +118,11 @@ export function Footer() {
                     {messages.footer.nobara}
                   </Link>
                 </li>
+                <li>
+                  <Link to="/distro/cachyos-based" className="text-muted-foreground transition-colors hover:text-primary">
+                    {messages.footer.cachyos}
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>

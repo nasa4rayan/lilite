@@ -25,6 +25,7 @@ export type DistroFamily =
   | 'endeavouros-based'
   | 'garuda-based'
   | 'nobara-based'
+  | 'cachyos-based'
 
 export interface PackageItem {
   id: string

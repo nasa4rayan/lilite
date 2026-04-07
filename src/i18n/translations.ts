@@ -82,6 +82,7 @@ export interface AppMessages {
     endeavouros: string
     garuda: string
     nobara: string
+    cachyos: string
     brandDescription: string
     manualNotice: string
     copyright: string
@@ -106,6 +107,7 @@ export interface AppMessages {
     endeavourosDescription: string
     garudaDescription: string
     nobaraDescription: string
+    cachyosDescription: string
     archLogoAlt: string
     fedoraLogoAlt: string
     debianLogoAlt: string
@@ -121,6 +123,7 @@ export interface AppMessages {
     endeavourosLogoAlt: string
     garudaLogoAlt: string
     nobaraLogoAlt: string
+    cachyosLogoAlt: string
   }
   distroPage: {
     seoTitleSuffix: string
@@ -262,6 +265,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavouros: 'EndeavourOS',
       garuda: 'Garuda',
       nobara: 'Nobara',
+      cachyos: 'CachyOS',
       brandDescription:
         'Lilite is a Linux command builder that helps you generate one grouped install command from official repositories for Arch-based, Debian-based, and Fedora-based systems.',
       manualNotice: 'Manual review and execution only. No auto-installation. No external repositories.',
@@ -288,6 +292,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosDescription: 'Pacman workflow for EndeavourOS and Arch-derived systems.',
       garudaDescription: 'Pacman workflow for Garuda Linux and Arch-derived systems.',
       nobaraDescription: 'DNF workflow for Nobara and Fedora-derived systems.',
+      cachyosDescription: 'Pacman workflow for CachyOS and Arch-derived systems.',
       archLogoAlt: 'Arch Linux logo',
       fedoraLogoAlt: 'Fedora logo',
       debianLogoAlt: 'Debian logo',
@@ -303,6 +308,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosLogoAlt: 'EndeavourOS logo',
       garudaLogoAlt: 'Garuda logo',
       nobaraLogoAlt: 'Nobara logo',
+      cachyosLogoAlt: 'CachyOS logo',
     },
     distroPage: {
       seoTitleSuffix: 'Package Builder',
@@ -450,6 +456,12 @@ export const translations: Record<Language, AppMessages> = {
         shortDescription: 'Fedora-derived systems using dnf and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
+      'cachyos-based': {
+        title: 'CachyOS Family',
+        description: 'CachyOS-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Arch-derived systems using pacman and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
     },
   },
   fr: {
@@ -550,6 +562,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavouros: 'EndeavourOS',
       garuda: 'Garuda',
       nobara: 'Nobara',
+      cachyos: 'CachyOS',
       brandDescription:
         "Lilite est un générateur de commandes Linux qui vous aide à créer une seule commande d'installation groupée à partir des dépôts officiels pour les systèmes Arch-based, Debian-based et Fedora-based.",
       manualNotice: 'Vérification et exécution manuelles uniquement. Pas d’auto-installation. Aucun dépôt externe.',
@@ -576,6 +589,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosDescription: 'Flux pacman pour EndeavourOS et systèmes dérivés d’Arch.',
       garudaDescription: 'Flux pacman pour Garuda Linux et systèmes dérivés d’Arch.',
       nobaraDescription: 'Flux dnf pour Nobara et systèmes dérivés de Fedora.',
+      cachyosDescription: 'Flux pacman pour CachyOS et systèmes dérivés d’Arch.',
       archLogoAlt: 'Logo Arch Linux',
       fedoraLogoAlt: 'Logo Fedora',
       debianLogoAlt: 'Logo Debian',
@@ -591,6 +605,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosLogoAlt: 'Logo EndeavourOS',
       garudaLogoAlt: 'Logo Garuda',
       nobaraLogoAlt: 'Logo Nobara',
+      cachyosLogoAlt: 'Logo CachyOS',
     },
     distroPage: {
       seoTitleSuffix: 'Générateur de paquets',
@@ -743,6 +758,13 @@ export const translations: Record<Language, AppMessages> = {
         description:
           'Les distributions Nobara-based utilisent dnf. Choisissez des paquets utiles et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés de Fedora utilisant dnf.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'cachyos-based': {
+        title: 'CachyOS-based',
+        description:
+          'Les distributions CachyOS-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
     },

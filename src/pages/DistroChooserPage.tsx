@@ -19,8 +19,9 @@ export function DistroChooserPage() {
   const zorinLogo = 'https://cdn.simpleicons.org/zorin'
   const parrotLogo = 'https://cdn.simpleicons.org/parrotsecurity'
   const endeavourosLogo = 'https://cdn.simpleicons.org/endeavouros'
-  const garudaLogo = 'https://cdn.simpleicons.org/garuda'
+  const garudaLogo = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/garuda-linux.svg'
   const nobaraLogo = 'https://cdn.simpleicons.org/fedora'
+  const cachyosLogo = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/cachyos-linux.svg'
 
   useSEO({
     title: messages.chooserPage.seoTitle,
@@ -37,7 +38,7 @@ export function DistroChooserPage() {
         as="h1"
       />
       <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border bg-card/70 p-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center">
-        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">15 distro families</span>
+        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">16 distro families</span>
         <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">apt / pacman / yay / dnf / zypper / apk</span>
         <span>Pick once, generate clean commands instantly.</span>
       </div>
@@ -161,6 +162,14 @@ export function DistroChooserPage() {
           logoSrc={nobaraLogo}
           logoAlt={messages.chooserPage.nobaraLogoAlt}
           manager="dnf"
+        />
+        <DistroCard
+          to="/distro/cachyos-based"
+          title="CachyOS"
+          description={messages.chooserPage.cachyosDescription}
+          logoSrc={cachyosLogo}
+          logoAlt={messages.chooserPage.cachyosLogoAlt}
+          manager="pacman / yay"
         />
       </div>
     </main>
