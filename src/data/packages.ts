@@ -728,6 +728,7 @@ export const parrotPackages: PackageItem[] = fromTuples('par', debianTuples)
 export const endeavourosPackages: PackageItem[] = fromTuples('end', archTuples)
 export const garudaPackages: PackageItem[] = fromTuples('gar', archTuples)
 export const nobaraPackages: PackageItem[] = fromTuples('nob', fedoraTuples)
+export const cachyosPackages: PackageItem[] = fromTuples('cac', archTuples)
 
 export const distroPackages: Record<DistroFamily, PackageItem[]> = {
   'arch-based': archPackages,
@@ -745,6 +746,7 @@ export const distroPackages: Record<DistroFamily, PackageItem[]> = {
   'endeavouros-based': endeavourosPackages,
   'garuda-based': garudaPackages,
   'nobara-based': nobaraPackages,
+  'cachyos-based': cachyosPackages,
 }
 
 export const maintenanceCommands: Record<DistroFamily, MaintenanceCommand[]> = {
@@ -792,6 +794,9 @@ export const maintenanceCommands: Record<DistroFamily, MaintenanceCommand[]> = {
   ],
   'nobara-based': [
     { id: 'nob-maintenance', title: 'Refresh and upgrade system', command: 'sudo dnf upgrade --refresh' },
+  ],
+  'cachyos-based': [
+    { id: 'cac-maintenance', title: 'Refresh and upgrade system', command: 'sudo pacman -Syu' },
   ],
 }
 
@@ -884,5 +889,10 @@ export const distroInfo: Record<
     title: 'Nobara-based',
     description: 'Nobara-based distributions use dnf. Select from 159 curated packages and generate one grouped install command.',
     shortDescription: 'Fedora-derived systems using dnf package management.',
+  },
+  'cachyos-based': {
+    title: 'CachyOS-based',
+    description: 'CachyOS-based distributions use pacman. Select from 159 curated packages and generate one grouped install command.',
+    shortDescription: 'Arch-derived systems using pacman package management.',
   },
 }

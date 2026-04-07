@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar'
 import { ChatWidget } from '@/components/chat-widget'
 import { useTheme } from '@/hooks/useTheme'
 import { ArchPage } from '@/pages/ArchPage'
+import { CachyOsPage } from '@/pages/CachyOsPage'
 import { DebianPage } from '@/pages/DebianPage'
 import { DistroChooserPage } from '@/pages/DistroChooserPage'
 import { EndeavourOsPage } from '@/pages/EndeavourOsPage'
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/distro/endeavouros-based" element={<EndeavourOsPage />} />
           <Route path="/distro/garuda-based" element={<GarudaPage />} />
           <Route path="/distro/nobara-based" element={<NobaraPage />} />
+          <Route path="/distro/cachyos-based" element={<CachyOsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
