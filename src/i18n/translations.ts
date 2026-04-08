@@ -48,6 +48,10 @@ export interface AppMessages {
     steps: LocalizedStep[]
     whyTrustTitle: string
     whyTrustDescription: string
+    communitySectionTitle: string
+    communitySectionDescription: string
+    linuxCommunityTitle: string
+    popularAppsTitle: string
     trustCards: {
       noHiddenExecutionTitle: string
       noHiddenExecutionBody: string
@@ -92,6 +96,9 @@ export interface AppMessages {
     seoDescription: string
     title: string
     description: string
+    totalFamiliesBadge: string
+    packageManagersBadge: string
+    summaryNote: string
     archDescription: string
     fedoraDescription: string
     debianDescription: string
@@ -132,6 +139,10 @@ export interface AppMessages {
     packageSelectionTitle: string
     packageSelectionDescription: string
     selected: string
+    sourceModeAria: string
+    officialSourceLabel: string
+    communitySourceLabel: string
+    communityModeHint: string
     noPackagesMatch: string
     clearSelection: string
     getYourLilite: string
@@ -140,6 +151,7 @@ export interface AppMessages {
   }
   common: {
     back: string
+    skipToContent: string
     copyCommand: string
     copied: string
     searchPackagesAria: string
@@ -148,6 +160,7 @@ export interface AppMessages {
     all: string
     openPackageBuilder: string
     selectLabelPrefix: string
+    logoAlt: string
   }
   notFound: {
     seoTitle: string
@@ -161,6 +174,25 @@ export interface AppMessages {
     title: string
     placeholder: string
     reviewMessage: string
+  }
+  chatWidget: {
+    toggleAria: string
+    dialogAria: string
+    title: string
+    clearHistoryAria: string
+    closeAria: string
+    emptyState: string
+    assistantTyping: string
+    jumpToLatest: string
+    jumpToLatestAria: string
+    launcherHint: string
+    inputPlaceholder: string
+    inputAria: string
+    sendAria: string
+    errors: {
+      noResponseBody: string
+      fetchFailed: string
+    }
   }
   categories: Record<Category, string>
   distroInfo: Record<DistroFamily, DistroLocalizedInfo>
@@ -191,36 +223,40 @@ export const translations: Record<Language, AppMessages> = {
       },
     },
     home: {
-      seoTitle: 'Lilite | Linux Command Builder',
+      seoTitle: 'Lilite | Linux Package Command Builder',
       howItWorksTitle: 'How Lilite Works',
-      howItWorksDescription: 'A fast four-step flow built for transparency and control.',
+      howItWorksDescription: 'A quick four-step flow focused on transparency and control.',
       steps: [
         {
-          title: 'Choose your distro family',
-          description: 'Pick Arch-based, Debian-based, or Fedora-based so command syntax is correct from the start.',
+          title: 'Choose your distribution family',
+          description: 'Select your Linux family so Lilite generates the correct package manager syntax.',
         },
         {
           title: 'Find and select packages',
           description: 'Use category filters and search to quickly choose only what you need.',
         },
         {
-          title: 'Review one grouped command',
-          description: 'The preview updates live and always stays as one install command.',
+          title: 'Review one grouped install command',
+          description: 'The live preview updates instantly and always stays as a single command.',
         },
         {
           title: 'Copy and run manually',
-          description: 'You keep full control by running the command yourself in your terminal.',
+          description: 'You stay in control by running the command yourself in your terminal.',
         },
       ],
       whyTrustTitle: 'Why Trust Lilite',
-      whyTrustDescription: 'Built to stay minimal, inspectable, and predictable.',
+      whyTrustDescription: 'Lilite stays minimal, inspectable, and predictable.',
+      communitySectionTitle: 'Built with Linux Community Spirit',
+      communitySectionDescription: 'A visual catalog inspired by open-source ecosystems and the apps people use every day.',
+      linuxCommunityTitle: 'Linux Community',
+      popularAppsTitle: 'Popular App Pack',
       trustCards: {
-        noHiddenExecutionTitle: 'No Hidden Execution',
-        noHiddenExecutionBody: 'No login, no backend APIs, and no remote command execution.',
+        noHiddenExecutionTitle: 'No hidden execution',
+        noHiddenExecutionBody: 'No login required, no backend command execution, and no automatic installs.',
         fullControlTitle: 'Full control',
-        fullControlBody: 'Review, copy, and run commands yourself in your own terminal.',
-        oneCleanOutputTitle: 'One clean output',
-        oneCleanOutputBody: 'Package selections are grouped into one clear install command.',
+        fullControlBody: 'Review, copy, and run commands in your own terminal.',
+        oneCleanOutputTitle: 'One clear output',
+        oneCleanOutputBody: 'All selected packages are grouped into one clean install command.',
       },
     },
     faq: {
@@ -233,7 +269,7 @@ export const translations: Record<Language, AppMessages> = {
         },
         {
           question: 'Where do package names come from?',
-          answer: 'Lilite uses local typed datasets with package names from official repositories for each supported distro family.',
+          answer: 'Lilite uses local typed datasets that reference package names from official repositories for each supported distribution family.',
         },
         {
           question: 'Can Lilite generate scripts?',
@@ -241,15 +277,15 @@ export const translations: Record<Language, AppMessages> = {
         },
         {
           question: 'Are third-party package sources supported?',
-          answer: 'No. Flatpak, Snap, AUR, COPR, AppImage, and external repositories are intentionally excluded.',
+          answer: 'No. Flatpak, Snap, AUR, COPR, AppImage, and other external sources are intentionally excluded.',
         },
       ],
     },
     footer: {
       navigation: 'Navigation',
-      distros: 'Distros',
+      distros: 'Distributions',
       home: 'Home',
-      distroChooser: 'Distro Chooser',
+      distroChooser: 'Choose a Distro',
       arch: 'Arch',
       fedora: 'Fedora',
       debian: 'Debian',
@@ -267,19 +303,22 @@ export const translations: Record<Language, AppMessages> = {
       nobara: 'Nobara',
       cachyos: 'CachyOS',
       brandDescription:
-        'Lilite is a Linux command builder that helps you generate one grouped install command from official repositories for Arch-based, Debian-based, and Fedora-based systems.',
-      manualNotice: 'Manual review and execution only. No auto-installation. No external repositories.',
+        'Lilite helps you generate one grouped install command from official repositories across major Linux distribution families.',
+      manualNotice: 'Manual review and execution only. No automatic installation. No third-party repositories.',
       copyright: 'All rights reserved.',
     },
     chooserPage: {
-      seoTitle: 'Choose Distro Family',
+      seoTitle: 'Choose a Distribution Family',
       seoDescription:
-        'Select your Linux distro family and build one grouped install command with the right package manager.',
-      title: 'Choose Your Distro Family',
-      description: 'Pick your distro family to generate package commands with the correct package manager and package names.',
+        'Select your Linux distribution family and generate one grouped install command with the right package manager.',
+      title: 'Choose Your Distribution Family',
+      description: 'Pick your Linux family to generate install commands with the correct package manager and package names.',
+      totalFamiliesBadge: '15 distribution families',
+      packageManagersBadge: 'apt / pacman / yay / dnf / zypper / apk',
+      summaryNote: 'Choose once, generate clean commands instantly.',
       archDescription: 'Pacman workflow for Arch Linux and related distributions.',
       fedoraDescription: 'DNF workflow for Fedora and Fedora-like RPM systems.',
-      debianDescription: 'Apt workflow for Debian, Ubuntu, and Debian derivatives.',
+      debianDescription: 'APT workflow for Debian, Ubuntu, and Debian derivatives.',
       opensuseDescription: 'Zypper workflow for openSUSE and SUSE-compatible systems.',
       alpineDescription: 'APK workflow for Alpine Linux and Alpine derivatives.',
       ubuntuDescription: 'APT workflow for Ubuntu and Ubuntu-like systems.',
@@ -316,8 +355,12 @@ export const translations: Record<Language, AppMessages> = {
       maintenanceSectionDescription: 'Run these maintenance commands before installing additional packages.',
       packageSelectionTitle: 'Package Selection',
       packageSelectionDescription:
-        'Filter package cards, select what you need, then click Get Your Lilite to generate one grouped install command.',
+        'Filter packages, select what you need, then click Get Your Lilite to generate one grouped install command.',
       selected: 'Selected',
+      sourceModeAria: 'Package source mode',
+      officialSourceLabel: 'Official',
+      communitySourceLabel: 'Community (yay)',
+      communityModeHint: 'Community mode uses yay -S to install packages commonly provided through AUR on Arch-based systems.',
       noPackagesMatch: 'No packages match your current search and category filters.',
       clearSelection: 'Clear Selection',
       getYourLilite: 'Get Your Lilite',
@@ -326,6 +369,7 @@ export const translations: Record<Language, AppMessages> = {
     },
     common: {
       back: 'Back',
+      skipToContent: 'Skip to content',
       copyCommand: 'Copy Command',
       copied: 'Copied',
       searchPackagesAria: 'Search packages',
@@ -334,19 +378,39 @@ export const translations: Record<Language, AppMessages> = {
       all: 'All',
       openPackageBuilder: 'Open package builder',
       selectLabelPrefix: 'Select',
+      logoAlt: 'Lilite logo',
     },
     notFound: {
       seoTitle: 'Page Not Found',
-      seoDescription: 'The page you requested could not be found. Return to Lilite and continue building safe Linux install commands.',
+      seoDescription: 'The page you requested could not be found. Return to Lilite and continue building Linux install commands safely.',
       title: 'Page not found',
-      description: 'The page you requested does not exist. Return home and continue with Lilite.',
+      description: "The page you're looking for doesn't exist. Return home and continue with Lilite.",
       backToHome: 'Back to Home',
       codeLabel: '404',
     },
     terminalPreview: {
       title: 'Terminal Preview',
       placeholder: '# Select packages to generate one grouped install command',
-      reviewMessage: 'Review this command before running it in your own terminal.',
+      reviewMessage: 'Review this command carefully before running it in your terminal.',
+    },
+    chatWidget: {
+      toggleAria: 'Toggle Lilo assistant',
+      dialogAria: 'Lilo assistant',
+      title: 'Lilo',
+      clearHistoryAria: 'Reset chat',
+      closeAria: 'Close Lilo',
+      emptyState: 'Ask Lilo beginner-friendly Linux package questions.',
+      assistantTyping: 'Lilo is typing...',
+      jumpToLatest: 'Latest',
+      jumpToLatestAria: 'Scroll to the latest messages',
+      launcherHint: 'Start chatting about Linux',
+      inputPlaceholder: 'Type your message...',
+      inputAria: 'Chat input',
+      sendAria: 'Send message',
+      errors: {
+        noResponseBody: 'No response body from the server.',
+        fetchFailed: 'Unable to fetch the assistant response.',
+      },
     },
     categories: {
       Browsers: 'Browsers',
@@ -359,100 +423,100 @@ export const translations: Record<Language, AppMessages> = {
     },
     distroInfo: {
       'arch-based': {
-        title: 'Famille Arch',
+        title: 'Arch Family',
         description:
-          'Arch-based distributions use pacman. Select from curated packages in official repositories and generate one grouped install command.',
+          'Arch-based distributions use pacman. Select curated packages from official repositories and generate one grouped install command.',
         shortDescription: 'Rolling-release systems using pacman and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'debian-based': {
-        title: 'Famille Debian',
+        title: 'Debian Family',
         description:
           'Debian-based distributions use apt. Choose commonly used packages and copy one grouped install command for manual execution.',
         shortDescription: 'Stable systems using apt and official package sources.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'fedora-based': {
-        title: 'Famille Fedora',
+        title: 'Fedora Family',
         description:
-          'Fedora-based distributions use dnf. Pick useful official-repo packages and generate one clean grouped install command.',
+          'Fedora-based distributions use dnf. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'RPM-based systems powered by dnf and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'opensuse-based': {
         title: 'openSUSE Family',
         description:
-          'openSUSE-based distributions use zypper. Pick useful packages and generate one grouped install command.',
+          'openSUSE-based distributions use zypper. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'RPM-based systems powered by zypper and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'alpine-based': {
         title: 'Alpine Family',
         description:
-          'Alpine-based distributions use apk. Pick useful packages and generate one grouped install command.',
+          'Alpine-based distributions use apk. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Lightweight systems using apk and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'ubuntu-based': {
         title: 'Ubuntu Family',
         description:
-          'Ubuntu-based distributions use apt. Pick useful packages and generate one grouped install command.',
+          'Ubuntu-based distributions use apt. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'kali-based': {
         title: 'Kali Family',
         description:
-          'Kali-based distributions use apt. Pick useful packages and generate one grouped install command.',
+          'Kali-based distributions use apt. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Security-focused systems using apt package management.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'manjaro-based': {
         title: 'Manjaro Family',
         description:
-          'Manjaro-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+          'Manjaro-based distributions use pacman. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Arch-derived systems using pacman and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'mint-based': {
         title: 'Linux Mint Family',
-        description: 'Linux Mint-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        description: 'Linux Mint-based distributions use apt. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'popos-based': {
         title: 'Pop!_OS Family',
-        description: 'Pop!_OS-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        description: 'Pop!_OS-based distributions use apt. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'zorin-based': {
         title: 'Zorin Family',
-        description: 'Zorin-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        description: 'Zorin-based distributions use apt. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Ubuntu-derived systems using apt and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'parrot-based': {
         title: 'Parrot Family',
-        description: 'Parrot-based distributions use apt. Pick useful packages and generate one grouped install command.',
+        description: 'Parrot-based distributions use apt. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Security-focused Debian-derived systems using apt.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'endeavouros-based': {
         title: 'EndeavourOS Family',
-        description: 'EndeavourOS-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        description: 'EndeavourOS-based distributions use pacman. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Arch-derived systems using pacman and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'garuda-based': {
         title: 'Garuda Family',
-        description: 'Garuda-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        description: 'Garuda-based distributions use pacman. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Arch-derived systems using pacman and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
       'nobara-based': {
         title: 'Nobara Family',
-        description: 'Nobara-based distributions use dnf. Pick useful packages and generate one grouped install command.',
+        description: 'Nobara-based distributions use dnf. Pick useful packages from official repositories and generate one grouped install command.',
         shortDescription: 'Fedora-derived systems using dnf and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
@@ -466,8 +530,8 @@ export const translations: Record<Language, AppMessages> = {
   },
   fr: {
     navbar: {
-      starOnGitHub: 'Star sur GitHub',
-      starAria: 'Mettre Lilite en favori sur GitHub',
+      starOnGitHub: 'Mettre une étoile sur GitHub',
+      starAria: 'Mettre une étoile à Lilite sur GitHub',
     },
     languageToggle: {
       aria: 'Changer la langue',
@@ -477,32 +541,32 @@ export const translations: Record<Language, AppMessages> = {
       switchToLight: 'Passer en mode clair',
     },
     hero: {
-      title: "Créez des commandes d'installation Linux claires, sans approximation",
+      title: "Créez des commandes d'installation Linux claires et fiables",
       description:
-        "Sélectionnez des paquets depuis les dépôts officiels et générez une seule commande d'installation groupée. Lilite n'exécute rien automatiquement.",
+        "Sélectionnez des paquets depuis les dépôts officiels et générez une commande d'installation groupée unique. Lilite n'exécute rien automatiquement.",
       startBuilding: 'Commencer',
       badges: {
         manualReview: 'Vérification manuelle',
-        oneGroupedCommand: 'Une commande groupée',
+        oneGroupedCommand: 'Commande groupée unique',
         manualExecution: 'Exécution manuelle',
       },
     },
     home: {
-      seoTitle: 'Lilite | Generateur de commandes Linux',
-      howItWorksTitle: 'Comment Lilite fonctionne',
-      howItWorksDescription: 'Un flux simple en quatre étapes, pensé pour la transparence et le contrôle.',
+      seoTitle: 'Lilite | Générateur de commandes Linux',
+      howItWorksTitle: 'Comment fonctionne Lilite',
+      howItWorksDescription: 'Un parcours rapide en quatre étapes, conçu pour la transparence et le contrôle.',
       steps: [
         {
           title: 'Choisissez votre famille de distribution',
-          description: "Choisissez Arch-based, Debian-based ou Fedora-based pour avoir la bonne syntaxe dès le départ.",
+          description: 'Sélectionnez votre famille Linux pour générer la bonne syntaxe de gestionnaire de paquets.',
         },
         {
           title: 'Trouvez et sélectionnez vos paquets',
           description: 'Utilisez les filtres par catégorie et la recherche pour choisir rapidement ce dont vous avez besoin.',
         },
         {
-          title: 'Vérifiez une commande groupée',
-          description: "L'aperçu se met à jour en direct et reste toujours une seule commande d'installation.",
+          title: 'Vérifiez une commande groupée unique',
+          description: "L'aperçu en direct se met à jour instantanément et reste toujours une seule commande.",
         },
         {
           title: 'Copiez et exécutez manuellement',
@@ -510,26 +574,30 @@ export const translations: Record<Language, AppMessages> = {
         },
       ],
       whyTrustTitle: 'Pourquoi faire confiance à Lilite',
-      whyTrustDescription: 'Conçu pour rester minimal, prévisible et facile à inspecter.',
+      whyTrustDescription: 'Lilite reste minimal, vérifiable et prévisible.',
+      communitySectionTitle: "Conçu avec l'esprit de la communauté Linux",
+      communitySectionDescription: "Un catalogue visuel inspiré de l'écosystème open source et des outils utilisés au quotidien.",
+      linuxCommunityTitle: 'Communauté Linux',
+      popularAppsTitle: "Pack d'applications populaires",
       trustCards: {
         noHiddenExecutionTitle: 'Aucune exécution cachée',
-        noHiddenExecutionBody: 'Pas de connexion, pas d’API backend, et aucune exécution distante.',
+        noHiddenExecutionBody: "Pas de connexion requise, pas d'exécution de commandes côté serveur, et aucune installation automatique.",
         fullControlTitle: 'Contrôle total',
         fullControlBody: 'Vérifiez, copiez et exécutez les commandes vous-même dans votre terminal.',
         oneCleanOutputTitle: 'Un résultat clair',
-        oneCleanOutputBody: 'Les sélections de paquets sont regroupées dans une seule commande lisible.',
+        oneCleanOutputBody: "Toutes les sélections sont regroupées dans une commande d'installation claire.",
       },
     },
     faq: {
       title: 'FAQ',
-      description: 'Réponses rapides sur la manière dont Lilite garde une installation sûre, transparente et 100% manuelle.',
+      description: "Réponses rapides sur la manière dont Lilite rend l'installation de paquets sûre, transparente et 100 % manuelle.",
       items: [
         {
           question: 'Lilite installe-t-il les logiciels automatiquement ?',
           answer: 'Non. Lilite génère uniquement des commandes. Vous copiez, vérifiez et exécutez manuellement dans votre terminal.',
         },
         {
-          question: 'D’où viennent les noms de paquets ?',
+          question: "D'où viennent les noms de paquets ?",
           answer: 'Lilite utilise des jeux de données typés locaux avec des noms issus des dépôts officiels pour chaque famille supportée.',
         },
         {
@@ -537,16 +605,16 @@ export const translations: Record<Language, AppMessages> = {
           answer: 'Non. Lilite produit volontairement une seule commande groupée pour garder un comportement transparent et vérifiable.',
         },
         {
-          question: 'Les sources de paquets tierces sont-elles supportées ?',
-          answer: 'Non. Flatpak, Snap, AUR, COPR, AppImage et les dépôts externes sont volontairement exclus.',
+          question: 'Les sources de paquets tierces sont-elles prises en charge ?',
+          answer: 'Non. Flatpak, Snap, AUR, COPR, AppImage et les sources externes sont volontairement exclus.',
         },
       ],
     },
     footer: {
       navigation: 'Navigation',
-      distros: 'Distros',
+      distros: 'Distributions',
       home: 'Accueil',
-      distroChooser: 'Choix de distro',
+      distroChooser: 'Choisir une distribution',
       arch: 'Arch',
       fedora: 'Fedora',
       debian: 'Debian',
@@ -564,32 +632,34 @@ export const translations: Record<Language, AppMessages> = {
       nobara: 'Nobara',
       cachyos: 'CachyOS',
       brandDescription:
-        "Lilite est un générateur de commandes Linux qui vous aide à créer une seule commande d'installation groupée à partir des dépôts officiels pour les systèmes Arch-based, Debian-based et Fedora-based.",
-      manualNotice: 'Vérification et exécution manuelles uniquement. Pas d’auto-installation. Aucun dépôt externe.',
+        "Lilite vous aide à générer une commande d'installation groupée unique depuis les dépôts officiels, pour les principales familles de distributions Linux.",
+      manualNotice: 'Vérification et exécution manuelles uniquement. Aucune installation automatique. Aucun dépôt tiers.',
       copyright: 'Tous droits réservés.',
     },
     chooserPage: {
-      seoTitle: 'Choisir une famille de distro',
+      seoTitle: 'Choisir une famille de distributions',
       seoDescription:
-        'Choisissez votre famille de distro Linux pour générer une seule commande groupée avec le bon gestionnaire de paquets.',
+        'Sélectionnez votre famille de distributions Linux et générez une commande groupée unique avec le bon gestionnaire de paquets.',
       title: 'Choisissez votre famille de distribution',
-      description: 'Choisissez votre famille de distro pour générer des commandes avec le bon gestionnaire de paquets.',
-      archDescription: 'Flux pacman pour Arch Linux et distributions associées.',
-      fedoraDescription: 'Flux dnf pour Fedora et systèmes RPM similaires.',
-      debianDescription: 'Flux apt pour Debian, Ubuntu et dérivées Debian.',
-      opensuseDescription: 'Flux zypper pour openSUSE et systèmes compatibles SUSE.',
-      alpineDescription: 'Flux apk pour Alpine Linux et distributions dérivées.',
-      ubuntuDescription: 'Flux apt pour Ubuntu et systèmes compatibles Ubuntu.',
-      kaliDescription: 'Flux apt pour Kali Linux et distributions Debian orientées sécurité.',
-      manjaroDescription: 'Flux pacman pour Manjaro et systèmes dérivés d’Arch.',
-      mintDescription: 'Flux apt pour Linux Mint et systèmes dérivés d’Ubuntu.',
-      poposDescription: 'Flux apt pour Pop!_OS et systèmes dérivés d’Ubuntu.',
-      zorinDescription: 'Flux apt pour Zorin OS et systèmes dérivés d’Ubuntu.',
-      parrotDescription: 'Flux apt pour Parrot Security et systèmes dérivés de Debian.',
-      endeavourosDescription: 'Flux pacman pour EndeavourOS et systèmes dérivés d’Arch.',
-      garudaDescription: 'Flux pacman pour Garuda Linux et systèmes dérivés d’Arch.',
-      nobaraDescription: 'Flux dnf pour Nobara et systèmes dérivés de Fedora.',
-      cachyosDescription: 'Flux pacman pour CachyOS et systèmes dérivés d’Arch.',
+      description: 'Choisissez votre famille Linux pour générer des commandes avec le bon gestionnaire et les bons noms de paquets.',
+      totalFamiliesBadge: '15 familles de distributions',
+      packageManagersBadge: 'apt / pacman / yay / dnf / zypper / apk',
+      summaryNote: 'Choisissez une fois, générez des commandes propres instantanément.',
+      archDescription: 'Flux Pacman pour Arch Linux et distributions associées.',
+      fedoraDescription: 'Flux DNF pour Fedora et systèmes RPM similaires.',
+      debianDescription: 'Flux APT pour Debian, Ubuntu et distributions dérivées de Debian.',
+      opensuseDescription: 'Flux Zypper pour openSUSE et systèmes compatibles SUSE.',
+      alpineDescription: 'Flux APK pour Alpine Linux et distributions dérivées.',
+      ubuntuDescription: 'Flux APT pour Ubuntu et systèmes compatibles Ubuntu.',
+      kaliDescription: 'Flux APT pour Kali Linux et distributions Debian orientées sécurité.',
+      manjaroDescription: 'Flux Pacman pour Manjaro et systèmes dérivés d\'Arch.',
+      mintDescription: 'Flux APT pour Linux Mint et systèmes dérivés d\'Ubuntu.',
+      poposDescription: 'Flux APT pour Pop!_OS et systèmes dérivés d\'Ubuntu.',
+      zorinDescription: 'Flux APT pour Zorin OS et systèmes dérivés d\'Ubuntu.',
+      parrotDescription: 'Flux APT pour Parrot Security et systèmes dérivés de Debian.',
+      endeavourosDescription: 'Flux Pacman pour EndeavourOS et systèmes dérivés d\'Arch.',
+      garudaDescription: 'Flux Pacman pour Garuda Linux et systèmes dérivés d\'Arch.',
+      nobaraDescription: 'Flux DNF pour Nobara et systèmes dérivés de Fedora.',
       archLogoAlt: 'Logo Arch Linux',
       fedoraLogoAlt: 'Logo Fedora',
       debianLogoAlt: 'Logo Debian',
@@ -613,8 +683,13 @@ export const translations: Record<Language, AppMessages> = {
       maintenanceSectionDescription: "Exécutez ces commandes de maintenance avant d'installer d'autres paquets.",
       packageSelectionTitle: 'Sélection des paquets',
       packageSelectionDescription:
-        "Filtrez les cartes de paquets, sélectionnez ce dont vous avez besoin, puis cliquez sur Obtenir votre Lilite pour générer une seule commande groupée.",
+        "Filtrez les paquets, sélectionnez ce dont vous avez besoin, puis cliquez sur Obtenir votre Lilite pour générer une commande groupée unique.",
       selected: 'Sélectionnés',
+      sourceModeAria: 'Source des paquets',
+      officialSourceLabel: 'Officiel',
+      communitySourceLabel: 'Communauté (yay)',
+      communityModeHint:
+        "Le mode Communauté utilise yay -S pour installer plus facilement des paquets souvent proposés via l'AUR sur les systèmes basés sur Arch.",
       noPackagesMatch: 'Aucun paquet ne correspond à vos filtres actuels.',
       clearSelection: 'Vider la sélection',
       getYourLilite: 'Obtenir votre Lilite',
@@ -623,6 +698,7 @@ export const translations: Record<Language, AppMessages> = {
     },
     common: {
       back: 'Retour',
+      skipToContent: 'Aller au contenu',
       copyCommand: 'Copier la commande',
       copied: 'Copié',
       searchPackagesAria: 'Rechercher des paquets',
@@ -631,6 +707,7 @@ export const translations: Record<Language, AppMessages> = {
       all: 'Tous',
       openPackageBuilder: 'Ouvrir le générateur',
       selectLabelPrefix: 'Sélectionner',
+      logoAlt: 'Logo Lilite',
     },
     notFound: {
       seoTitle: 'Page introuvable',
@@ -643,7 +720,26 @@ export const translations: Record<Language, AppMessages> = {
     terminalPreview: {
       title: 'Aperçu terminal',
       placeholder: '# Sélectionnez des paquets pour générer une seule commande groupée',
-      reviewMessage: "Vérifiez cette commande avant de l'exécuter dans votre terminal.",
+      reviewMessage: "Vérifiez attentivement cette commande avant de l'exécuter dans votre terminal.",
+    },
+    chatWidget: {
+      toggleAria: "Afficher ou masquer l'assistant Lilo",
+      dialogAria: 'Assistant Lilo',
+      title: 'Lilo',
+      clearHistoryAria: 'Réinitialiser le chat',
+      closeAria: 'Fermer Lilo',
+      emptyState: 'Posez a Lilo des questions simples sur les paquets Linux.',
+      assistantTyping: 'Lilo est en train de répondre...',
+      jumpToLatest: 'Récent',
+      jumpToLatestAria: 'Aller aux derniers messages',
+      launcherHint: 'Commencer a parler de Linux',
+      inputPlaceholder: 'Écrivez votre message...',
+      inputAria: 'Saisie du chat',
+      sendAria: 'Envoyer le message',
+      errors: {
+        noResponseBody: "Aucune réponse n'a été reçue du serveur.",
+        fetchFailed: "Impossible de récupérer la réponse de l'assistant.",
+      },
     },
     categories: {
       Browsers: 'Navigateurs',
@@ -656,107 +752,107 @@ export const translations: Record<Language, AppMessages> = {
     },
     distroInfo: {
       'arch-based': {
-        title: 'Arch-based',
+        title: 'Famille Arch',
         description:
-          "Les distributions Arch-based utilisent pacman. Sélectionnez des paquets des dépôts officiels et générez une seule commande groupée.",
-        shortDescription: 'Systèmes rolling-release utilisant pacman et les dépôts officiels.',
+          "Les distributions basées sur Arch utilisent pacman. Sélectionnez des paquets des dépôts officiels et générez une commande groupée unique.",
+        shortDescription: 'Systèmes rolling release utilisant pacman et les dépôts officiels.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'debian-based': {
-        title: 'Debian-based',
+        title: 'Famille Debian',
         description:
-          "Les distributions Debian-based utilisent apt. Choisissez des paquets courants et copiez une seule commande groupée pour une exécution manuelle.",
+          "Les distributions basées sur Debian utilisent apt. Choisissez des paquets courants et copiez une commande groupée unique pour une exécution manuelle.",
         shortDescription: 'Systèmes stables utilisant apt et des sources officielles.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'fedora-based': {
-        title: 'Fedora-based',
+        title: 'Famille Fedora',
         description:
-          'Les distributions Fedora-based utilisent dnf. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
+          'Les distributions basées sur Fedora utilisent dnf. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes RPM utilisant dnf et les dépôts officiels.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'opensuse-based': {
-        title: 'openSUSE-based',
+        title: 'Famille openSUSE',
         description:
-          'Les distributions openSUSE-based utilisent zypper. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur openSUSE utilisent zypper. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes RPM utilisant zypper et les dépôts officiels.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'alpine-based': {
-        title: 'Alpine-based',
+        title: 'Famille Alpine',
         description:
-          'Les distributions Alpine-based utilisent apk. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Alpine utilisent apk. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes légers utilisant apk et les dépôts officiels.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'ubuntu-based': {
-        title: 'Ubuntu-based',
+        title: 'Famille Ubuntu',
         description:
-          'Les distributions Ubuntu-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Ubuntu utilisent apt. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes basés sur Ubuntu utilisant apt et les dépôts officiels.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'kali-based': {
-        title: 'Kali-based',
+        title: 'Famille Kali',
         description:
-          'Les distributions Kali-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Kali utilisent apt. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes orientés sécurité utilisant apt.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'manjaro-based': {
-        title: 'Manjaro-based',
+        title: 'Famille Manjaro',
         description:
-          'Les distributions Manjaro-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Manjaro utilisent pacman. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'mint-based': {
-        title: 'Mint-based',
+        title: 'Famille Linux Mint',
         description:
-          'Les distributions Mint-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Linux Mint utilisent apt. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés d’Ubuntu utilisant apt.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'popos-based': {
-        title: 'Pop!_OS-based',
+        title: 'Famille Pop!_OS',
         description:
-          'Les distributions Pop!_OS-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Pop!_OS utilisent apt. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés d’Ubuntu utilisant apt.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'zorin-based': {
-        title: 'Zorin-based',
+        title: 'Famille Zorin',
         description:
-          'Les distributions Zorin-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Zorin utilisent apt. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés d’Ubuntu utilisant apt.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'parrot-based': {
-        title: 'Parrot-based',
+        title: 'Famille Parrot',
         description:
-          'Les distributions Parrot-based utilisent apt. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Parrot utilisent apt. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes orientés sécurité dérivés de Debian.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'endeavouros-based': {
-        title: 'EndeavourOS-based',
+        title: 'Famille EndeavourOS',
         description:
-          'Les distributions EndeavourOS-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur EndeavourOS utilisent pacman. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'garuda-based': {
-        title: 'Garuda-based',
+        title: 'Famille Garuda',
         description:
-          'Les distributions Garuda-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Garuda utilisent pacman. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
       'nobara-based': {
-        title: 'Nobara-based',
+        title: 'Famille Nobara',
         description:
-          'Les distributions Nobara-based utilisent dnf. Choisissez des paquets utiles et générez une commande groupée claire.',
+          'Les distributions basées sur Nobara utilisent dnf. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés de Fedora utilisant dnf.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },

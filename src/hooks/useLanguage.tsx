@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useMemo, useState } fr
 import { AppMessages, Language, translations } from '@/i18n/translations'
 
 const LANGUAGE_KEY = 'lilite-language'
+const DEFAULT_LANGUAGE: Language = 'en'
 
 interface LanguageContextValue {
   language: Language
@@ -13,11 +14,11 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 function readLanguage(): Language {
   if (typeof window === 'undefined') {
-    return 'en'
+    return DEFAULT_LANGUAGE
   }
 
   const stored = window.localStorage.getItem(LANGUAGE_KEY)
-  return stored === 'fr' ? 'fr' : 'en'
+  return stored === 'fr' ? 'fr' : DEFAULT_LANGUAGE
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

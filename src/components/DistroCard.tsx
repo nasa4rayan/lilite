@@ -19,7 +19,10 @@ export function DistroCard({ to, title, description, logoSrc, logoAlt, manager }
   const shortTitle = useMemo(() => title.replace(/[^a-zA-Z0-9]/g, '').slice(0, 2).toUpperCase(), [title])
 
   return (
-    <Link to={to} className="group block">
+    <Link
+      to={to}
+      className="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    >
       <Card className="h-full rounded-2xl border bg-card/80 shadow-sm transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/45 group-hover:shadow-md">
         <CardHeader className="p-4 sm:p-5">
           <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl border bg-secondary/60 p-2 shadow-sm">
@@ -33,6 +36,7 @@ export function DistroCard({ to, title, description, logoSrc, logoAlt, manager }
                 alt={logoAlt}
                 className="h-8 w-8 object-contain"
                 loading="lazy"
+                referrerPolicy="no-referrer"
                 onError={() => setLogoLoadFailed(true)}
               />
             )}

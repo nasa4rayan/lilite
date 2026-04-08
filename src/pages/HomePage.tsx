@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Layers3, Lock, ShieldCheck, Sparkles, Users } from 'lucide-react'
 import { HeroSection } from '@/components/HeroSection'
 import { FAQSection } from '@/components/FAQSection'
@@ -5,9 +6,15 @@ import { SectionHeader } from '@/components/SectionHeader'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useLanguage } from '@/hooks/useLanguage'
 import { useSEO } from '@/hooks/useSEO'
+import { getSiteUrl } from '@/lib/site'
+import {
+  createFAQSchema,
+  createSoftwareApplicationSchema,
+  createWebSiteSchema,
+} from '@/lib/structuredData'
 
 export function HomePage() {
-  const { messages } = useLanguage()
+  const { language, messages } = useLanguage()
   const linuxCommunity = [
     { name: 'Arch Linux', logo: 'https://cdn.simpleicons.org/archlinux' },
     { name: 'Debian', logo: 'https://cdn.simpleicons.org/debian' },
@@ -27,11 +34,29 @@ export function HomePage() {
     { name: 'Krita', logo: 'https://cdn.simpleicons.org/krita' },
     { name: 'VSCodium', logo: 'https://cdn.simpleicons.org/vscodium' },
   ]
+  const siteUrl = getSiteUrl()
+  const structuredData = useMemo(
+    () => [
+      createWebSiteSchema(siteUrl),
+      createSoftwareApplicationSchema(siteUrl, messages.hero.description, language),
+      createFAQSchema(messages.faq.items),
+    ],
+    [language, messages.faq.items, messages.hero.description, siteUrl],
+  )
 
   useSEO({
     title: messages.home.seoTitle,
     description: messages.hero.description,
     pathname: '/',
+    keywords: [
+      'linux command builder',
+      'linux install command generator',
+      'apt install command',
+      'pacman install command',
+      'dnf install command',
+      'linux package builder',
+    ],
+    structuredData,
   })
 
   return (
@@ -120,8 +145,8 @@ export function HomePage() {
       <section aria-labelledby="linux-community" className="py-6 sm:py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
           <SectionHeader
-            title="Built With Linux Community Spirit"
-            description="A richer visual catalog inspired by the open-source ecosystem and the apps people use every day."
+            title={messages.home.communitySectionTitle}
+            description={messages.home.communitySectionDescription}
             id="linux-community"
           />
 
@@ -132,14 +157,22 @@ export function HomePage() {
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/12 ring-1 ring-primary/20">
                     <Users className="h-4 w-4 text-primary" />
                   </span>
-                  Linux Community
+                  {messages.home.linuxCommunityTitle}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {linuxCommunity.map((item) => (
                     <div key={item.name} className="inline-flex items-center gap-2 rounded-xl border bg-background/70 px-3 py-2">
-                      <img src={item.logo} alt="" className="h-5 w-5 object-contain" loading="lazy" decoding="async" aria-hidden="true" />
+                      <img
+                        src={item.logo}
+                        alt=""
+                        className="h-5 w-5 object-contain"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        aria-hidden="true"
+                      />
                       <span className="truncate text-xs font-medium">{item.name}</span>
                     </div>
                   ))}
@@ -153,14 +186,22 @@ export function HomePage() {
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/12 ring-1 ring-primary/20">
                     <Layers3 className="h-4 w-4 text-primary" />
                   </span>
-                  Popular App Pack
+                  {messages.home.popularAppsTitle}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {popularApps.map((item) => (
                     <div key={item.name} className="inline-flex items-center gap-2 rounded-xl border bg-background/70 px-3 py-2">
-                      <img src={item.logo} alt="" className="h-5 w-5 object-contain" loading="lazy" decoding="async" aria-hidden="true" />
+                      <img
+                        src={item.logo}
+                        alt=""
+                        className="h-5 w-5 object-contain"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        aria-hidden="true"
+                      />
                       <span className="truncate text-xs font-medium">{item.name}</span>
                     </div>
                   ))}

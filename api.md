@@ -1,23 +1,6 @@
 # Groq API Setup
 
-## Recommended for Open Source: BYOK (Frontend)
-
-This project now supports BYOK mode in the chat widget.
-
-What this means:
-- No `.env.local` needed
-- No shared server key needed
-- Each user can paste their own `gsk_...` key in the widget
-
-How to use:
-1. Open chat widget
-2. Toggle `BYOK Mode: ON`
-3. Paste your Groq key in the input
-4. Start chatting
-
-## Optional: Backend Key Mode (`/api/chat`)
-
-Use this only if you want server-managed API calls.
+Lilite now uses a server-managed `/api/chat` endpoint so the Groq API key stays off the client.
 
 ### Local
 
@@ -45,15 +28,14 @@ npm run dev
 3. Apply to `Production` and `Preview` (and `Development` if needed)
 4. Redeploy
 
-## API Paths
+## API Path
 
-- Frontend BYOK calls Groq directly: `https://api.groq.com/openai/v1/chat/completions`
-- Backend mode uses local/project endpoint: `/api/chat`
+- Browser clients call the local/project endpoint: `/api/chat`
 
 ## Troubleshooting
 
 If chat fails:
-1. Ensure key starts with `gsk_`
-2. Ensure key is active (not revoked)
-3. If using backend mode, restart `npm run dev`
+1. Ensure `GROQ_API_KEY` starts with `gsk_`
+2. Ensure the key is active and not revoked
+3. Restart `npm run dev` after changing env variables
 4. Check browser DevTools `Network` tab for request errors

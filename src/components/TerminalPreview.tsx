@@ -20,7 +20,7 @@ export function TerminalPreview({ command }: TerminalPreviewProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <pre className="min-h-32 overflow-x-auto rounded-md border bg-muted/40 p-3 font-mono text-xs leading-relaxed sm:text-sm">
+        <pre className="min-h-32 overflow-x-auto whitespace-pre-wrap break-words rounded-md border bg-muted/40 p-3 font-mono text-xs leading-relaxed sm:text-sm">
           {hasCommand ? command : messages.terminalPreview.placeholder}
         </pre>
         <p className="inline-flex items-start gap-2 text-xs text-muted-foreground">

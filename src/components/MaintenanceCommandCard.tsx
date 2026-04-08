@@ -16,7 +16,9 @@ export function MaintenanceCommandCard({ title, command }: MaintenanceCommandCar
         <CardTitle className="text-base">{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <pre className="overflow-x-auto rounded-md border bg-muted/40 p-3 font-mono text-xs sm:text-sm">{command}</pre>
+        <pre className="min-h-20 overflow-x-auto whitespace-pre-wrap break-words rounded-md border bg-muted/40 p-3 font-mono text-xs leading-relaxed sm:text-sm">
+          {command}
+        </pre>
         <CopyButton text={command} label={messages.common.copyCommand} />
       </CardContent>
     </Card>
