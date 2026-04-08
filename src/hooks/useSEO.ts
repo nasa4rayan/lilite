@@ -8,10 +8,15 @@ interface SEOOptions {
   imagePath?: string
   type?: 'website' | 'article'
   keywords?: string[]
+  locale?: string
+  siteName?: string
+  twitterSite?: string
 }
 
 const DEFAULT_SITE_URL = 'https://www.lilite.site'
 const DEFAULT_IMAGE_PATH = '/og-image.png'
+const DEFAULT_SITE_NAME = 'Lilite'
+const DEFAULT_LOCALE = 'en_US'
 const DEFAULT_KEYWORDS = [
   'lilite',
   'ninite for linux',
@@ -78,6 +83,19 @@ function toAbsoluteUrl(value: string, siteUrl: string) {
   return new URL(value, siteUrl).toString()
 }
 
+function resolveCanonicalUrl(pathname: string | undefined, siteUrl: string) {
+  if (!pathname) {
+    return new URL(window.location.pathname, siteUrl).toString()
+  }
+
+  try {
+    return new URL(pathname, siteUrl).toString()
+  } catch {
+    const safePath = pathname.startsWith('/') ? pathname : `/${pathname}`
+    return new URL(safePath, siteUrl).toString()
+  }
+}
+
 export function useSEO({
   title,
   description,
@@ -86,13 +104,18 @@ export function useSEO({
   imagePath = DEFAULT_IMAGE_PATH,
   type = 'website',
   keywords = [],
+  locale = DEFAULT_LOCALE,
+  siteName = DEFAULT_SITE_NAME,
+  twitterSite,
 }: SEOOptions) {
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return
+    }
+
     const siteUrl = ((import.meta.env.VITE_SITE_URL as string | undefined) ?? DEFAULT_SITE_URL).replace(/\/+$/, '')
-    const titleWithBrand = title.includes('Lilite') ? title : `${title} | Lilite`
-    const currentPath = pathname ?? window.location.pathname
-    const normalizedPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
-    const canonicalUrl = new URL(normalizedPath, siteUrl).toString()
+    const titleWithBrand = title.includes(siteName) ? title : `${title} | ${siteName}`
+    const canonicalUrl = resolveCanonicalUrl(pathname, siteUrl)
     const imageUrl = toAbsoluteUrl(imagePath, siteUrl)
     const allKeywords = [...new Set([...DEFAULT_KEYWORDS, ...keywords.map((value) => value.trim().toLowerCase()).filter(Boolean)])]
     const keywordsContent = allKeywords.join(', ')
@@ -101,20 +124,25 @@ export function useSEO({
     upsertMetaByName('description', description)
     upsertMetaByName('keywords', keywordsContent)
     upsertMetaByName('robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large')
-    upsertMetaByName('application-name', 'Lilite')
-    upsertMetaByName('apple-mobile-web-app-title', 'Lilite')
-    upsertMetaByProperty('og:site_name', 'Lilite')
-    upsertMetaByProperty('og:locale', 'en_US')
+    upsertMetaByName('application-name', siteName)
+    upsertMetaByName('apple-mobile-web-app-title', siteName)
+    upsertMetaByProperty('og:site_name', siteName)
+    upsertMetaByProperty('og:locale', locale)
     upsertMetaByProperty('og:type', type)
     upsertMetaByProperty('og:title', titleWithBrand)
     upsertMetaByProperty('og:description', description)
     upsertMetaByProperty('og:url', canonicalUrl)
     upsertMetaByProperty('og:image', imageUrl)
-    upsertMetaByProperty('og:image:alt', 'Lilite Linux command builder preview')
+    upsertMetaByProperty('og:image:secure_url', imageUrl)
+    upsertMetaByProperty('og:image:alt', `${siteName} preview`)
     upsertMetaByName('twitter:card', 'summary_large_image')
     upsertMetaByName('twitter:title', titleWithBrand)
     upsertMetaByName('twitter:description', description)
     upsertMetaByName('twitter:image', imageUrl)
+    upsertMetaByName('twitter:url', canonicalUrl)
+    if (twitterSite?.trim()) {
+      upsertMetaByName('twitter:site', twitterSite.trim())
+    }
     upsertCanonical(canonicalUrl)
-  }, [description, imagePath, keywords, noindex, pathname, title, type])
+  }, [description, imagePath, keywords, locale, noindex, pathname, siteName, title, twitterSite, type])
 }
