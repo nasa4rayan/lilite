@@ -86,6 +86,7 @@ export interface AppMessages {
     endeavouros: string
     garuda: string
     nobara: string
+    cachyos: string
     brandDescription: string
     manualNotice: string
     copyright: string
@@ -113,6 +114,7 @@ export interface AppMessages {
     endeavourosDescription: string
     garudaDescription: string
     nobaraDescription: string
+    cachyosDescription: string
     archLogoAlt: string
     fedoraLogoAlt: string
     debianLogoAlt: string
@@ -128,6 +130,7 @@ export interface AppMessages {
     endeavourosLogoAlt: string
     garudaLogoAlt: string
     nobaraLogoAlt: string
+    cachyosLogoAlt: string
   }
   distroPage: {
     seoTitleSuffix: string
@@ -298,6 +301,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavouros: 'EndeavourOS',
       garuda: 'Garuda',
       nobara: 'Nobara',
+      cachyos: 'CachyOS',
       brandDescription:
         'Lilite helps you generate one grouped install command from official repositories across major Linux distribution families.',
       manualNotice: 'Manual review and execution only. No automatic installation. No third-party repositories.',
@@ -327,6 +331,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosDescription: 'Pacman workflow for EndeavourOS and Arch-derived systems.',
       garudaDescription: 'Pacman workflow for Garuda Linux and Arch-derived systems.',
       nobaraDescription: 'DNF workflow for Nobara and Fedora-derived systems.',
+      cachyosDescription: 'Pacman workflow for CachyOS and Arch-derived systems.',
       archLogoAlt: 'Arch Linux logo',
       fedoraLogoAlt: 'Fedora logo',
       debianLogoAlt: 'Debian logo',
@@ -342,6 +347,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosLogoAlt: 'EndeavourOS logo',
       garudaLogoAlt: 'Garuda logo',
       nobaraLogoAlt: 'Nobara logo',
+      cachyosLogoAlt: 'CachyOS logo',
     },
     distroPage: {
       seoTitleSuffix: 'Package Builder',
@@ -514,6 +520,12 @@ export const translations: Record<Language, AppMessages> = {
         shortDescription: 'Fedora-derived systems using dnf and official repositories.',
         maintenanceCardTitle: 'Refresh and upgrade system',
       },
+      'cachyos-based': {
+        title: 'CachyOS Family',
+        description: 'CachyOS-based distributions use pacman. Pick useful packages and generate one grouped install command.',
+        shortDescription: 'Arch-derived systems using pacman and official repositories.',
+        maintenanceCardTitle: 'Refresh and upgrade system',
+      },
     },
   },
   fr: {
@@ -618,6 +630,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavouros: 'EndeavourOS',
       garuda: 'Garuda',
       nobara: 'Nobara',
+      cachyos: 'CachyOS',
       brandDescription:
         "Lilite vous aide à générer une commande d'installation groupée unique depuis les dépôts officiels, pour les principales familles de distributions Linux.",
       manualNotice: 'Vérification et exécution manuelles uniquement. Aucune installation automatique. Aucun dépôt tiers.',
@@ -662,6 +675,7 @@ export const translations: Record<Language, AppMessages> = {
       endeavourosLogoAlt: 'Logo EndeavourOS',
       garudaLogoAlt: 'Logo Garuda',
       nobaraLogoAlt: 'Logo Nobara',
+      cachyosLogoAlt: 'Logo CachyOS',
     },
     distroPage: {
       seoTitleSuffix: 'Générateur de paquets',
@@ -840,6 +854,13 @@ export const translations: Record<Language, AppMessages> = {
         description:
           'Les distributions basées sur Nobara utilisent dnf. Choisissez des paquets utiles des dépôts officiels et générez une commande groupée claire.',
         shortDescription: 'Systèmes dérivés de Fedora utilisant dnf.',
+        maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
+      },
+      'cachyos-based': {
+        title: 'CachyOS-based',
+        description:
+          'Les distributions CachyOS-based utilisent pacman. Choisissez des paquets utiles et générez une commande groupée claire.',
+        shortDescription: 'Systèmes dérivés d’Arch utilisant pacman.',
         maintenanceCardTitle: 'Actualiser et mettre à niveau le système',
       },
     },

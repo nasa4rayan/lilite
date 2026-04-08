@@ -26,7 +26,7 @@ export function DistroChooserPage() {
   const zorinLogo = 'https://cdn.simpleicons.org/zorin'
   const parrotLogo = 'https://cdn.simpleicons.org/parrotsecurity'
   const endeavourosLogo = 'https://cdn.simpleicons.org/endeavouros'
-  const garudaLogo = 'https://cdn.simpleicons.org/garuda'
+  const garudaLogo = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/garuda-linux.svg'
   const nobaraLogo = 'https://cdn.simpleicons.org/fedora'
   const siteUrl = getSiteUrl()
   const distroItems = useMemo(
@@ -220,6 +220,14 @@ export function DistroChooserPage() {
           logoSrc={nobaraLogo}
           logoAlt={messages.chooserPage.nobaraLogoAlt}
           manager="dnf"
+        />
+        <DistroCard
+          to="/distro/cachyos-based"
+          title="CachyOS"
+          description={messages.chooserPage.cachyosDescription}
+          logoSrc={cachyosLogo}
+          logoAlt={messages.chooserPage.cachyosLogoAlt}
+          manager="pacman / yay"
         />
       </div>
     </main>

@@ -16,9 +16,10 @@ const installPrefixMap: Record<DistroFamily, string> = {
   'endeavouros-based': 'sudo pacman -S',
   'garuda-based': 'sudo pacman -S',
   'nobara-based': 'sudo dnf install',
+  'cachyos-based': 'sudo pacman -S',
 }
 
-const yaySupported: DistroFamily[] = ['arch-based', 'manjaro-based', 'endeavouros-based', 'garuda-based']
+const yaySupported: DistroFamily[] = ['arch-based', 'manjaro-based', 'endeavouros-based', 'garuda-based', 'cachyos-based']
 
 type BuildCommandOptions = {
   useCommunityHelper?: boolean
