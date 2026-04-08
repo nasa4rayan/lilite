@@ -10,8 +10,40 @@ interface SEOOptions {
   imagePath?: string
   type?: 'website' | 'article'
   keywords?: string[]
-  structuredData?: StructuredData[]
+  locale?: string
+  siteName?: string
+  twitterSite?: string
 }
+
+const DEFAULT_SITE_URL = 'https://www.lilite.site'
+const DEFAULT_IMAGE_PATH = '/og-image.png'
+const DEFAULT_SITE_NAME = 'Lilite'
+const DEFAULT_LOCALE = 'en_US'
+const DEFAULT_KEYWORDS = [
+  'lilite',
+  'ninite for linux',
+  'ninite alternative for linux',
+  'linux command builder',
+  'linux app installer',
+  'linux apps',
+  'pro linux apps',
+  'linux software installer',
+  'package installer command',
+  'apt install command',
+  'pacman install command',
+  'dnf install command',
+  'zypper install command',
+  'apk add command',
+  'arch linux installer',
+  'debian package installer',
+  'fedora package installer',
+  'pop os app installer',
+  'pop!_os package installer',
+  'pop os linux',
+  'cachyos app installer',
+  'cachyos linux',
+  'cachyos package manager',
+]
 
 function upsertMetaByName(name: string, content: string) {
   let tag = document.head.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null
@@ -67,58 +99,66 @@ function syncStructuredData(items: StructuredData[]) {
   })
 }
 
+function resolveCanonicalUrl(pathname: string | undefined, siteUrl: string) {
+  if (!pathname) {
+    return new URL(window.location.pathname, siteUrl).toString()
+  }
+
+  try {
+    return new URL(pathname, siteUrl).toString()
+  } catch {
+    const safePath = pathname.startsWith('/') ? pathname : `/${pathname}`
+    return new URL(safePath, siteUrl).toString()
+  }
+}
+
 export function useSEO({
   title,
   description,
   pathname,
   noindex = false,
-  imagePath = DEFAULT_OG_IMAGE_PATH,
+  imagePath = DEFAULT_IMAGE_PATH,
   type = 'website',
-  keywords,
-  structuredData = [],
+  keywords = [],
+  locale = DEFAULT_LOCALE,
+  siteName = DEFAULT_SITE_NAME,
+  twitterSite,
 }: SEOOptions) {
   useEffect(() => {
-    const siteUrl = getSiteUrl()
-    const titleWithBrand = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`
-    const currentPath = pathname ?? window.location.pathname
-    const normalizedPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
-    const canonicalUrl = new URL(normalizedPath, siteUrl).toString()
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return
+    }
+
+    const siteUrl = ((import.meta.env.VITE_SITE_URL as string | undefined) ?? DEFAULT_SITE_URL).replace(/\/+$/, '')
+    const titleWithBrand = title.includes(siteName) ? title : `${title} | ${siteName}`
+    const canonicalUrl = resolveCanonicalUrl(pathname, siteUrl)
     const imageUrl = toAbsoluteUrl(imagePath, siteUrl)
-    const robotsContent = noindex
-      ? 'noindex, nofollow'
-      : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
-    const language = document.documentElement.lang === 'fr' ? 'fr' : 'en'
-    const locale = language === 'fr' ? 'fr_FR' : 'en_US'
+    const allKeywords = [...new Set([...DEFAULT_KEYWORDS, ...keywords.map((value) => value.trim().toLowerCase()).filter(Boolean)])]
+    const keywordsContent = allKeywords.join(', ')
 
     document.title = titleWithBrand
     upsertMetaByName('description', description)
-    upsertMetaByName('application-name', SITE_NAME)
-    upsertMetaByName('apple-mobile-web-app-title', SITE_NAME)
-    upsertMetaByName('googlebot', robotsContent)
-    upsertMetaByName('robots', robotsContent)
+    upsertMetaByName('keywords', keywordsContent)
+    upsertMetaByName('robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large')
+    upsertMetaByName('application-name', siteName)
+    upsertMetaByName('apple-mobile-web-app-title', siteName)
+    upsertMetaByProperty('og:site_name', siteName)
     upsertMetaByProperty('og:locale', locale)
-    upsertMetaByProperty('og:site_name', SITE_NAME)
     upsertMetaByProperty('og:type', type)
     upsertMetaByProperty('og:title', titleWithBrand)
     upsertMetaByProperty('og:description', description)
     upsertMetaByProperty('og:url', canonicalUrl)
     upsertMetaByProperty('og:image', imageUrl)
-    upsertMetaByProperty('og:image:width', '1200')
-    upsertMetaByProperty('og:image:height', '630')
-    upsertMetaByProperty('og:image:alt', 'Lilite Linux command builder preview')
+    upsertMetaByProperty('og:image:secure_url', imageUrl)
+    upsertMetaByProperty('og:image:alt', `${siteName} preview`)
     upsertMetaByName('twitter:card', 'summary_large_image')
     upsertMetaByName('twitter:title', titleWithBrand)
     upsertMetaByName('twitter:description', description)
     upsertMetaByName('twitter:image', imageUrl)
-    upsertMetaByName('twitter:image:alt', 'Lilite Linux command builder preview')
-    upsertCanonical(canonicalUrl)
-
-    if (keywords?.length) {
-      upsertMetaByName('keywords', keywords.join(', '))
-    } else {
-      removeMetaByName('keywords')
+    upsertMetaByName('twitter:url', canonicalUrl)
+    if (twitterSite?.trim()) {
+      upsertMetaByName('twitter:site', twitterSite.trim())
     }
-
-    syncStructuredData(structuredData)
-  }, [description, imagePath, keywords, noindex, pathname, structuredData, title, type])
+    upsertCanonical(canonicalUrl)
+  }, [description, imagePath, keywords, locale, noindex, pathname, siteName, title, twitterSite, type])
 }

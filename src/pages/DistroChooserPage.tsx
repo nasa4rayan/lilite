@@ -28,46 +28,7 @@ export function DistroChooserPage() {
   const endeavourosLogo = 'https://cdn.simpleicons.org/endeavouros'
   const garudaLogo = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/garuda-linux.svg'
   const nobaraLogo = 'https://cdn.simpleicons.org/fedora'
-  const siteUrl = getSiteUrl()
-  const distroItems = useMemo(
-    () => [
-      { name: 'Arch', url: `${siteUrl}/distro/arch-based` },
-      { name: 'Fedora', url: `${siteUrl}/distro/fedora-based` },
-      { name: 'Debian', url: `${siteUrl}/distro/debian-based` },
-      { name: 'openSUSE', url: `${siteUrl}/distro/opensuse-based` },
-      { name: 'Alpine', url: `${siteUrl}/distro/alpine-based` },
-      { name: 'Ubuntu', url: `${siteUrl}/distro/ubuntu-based` },
-      { name: 'Kali', url: `${siteUrl}/distro/kali-based` },
-      { name: 'Manjaro', url: `${siteUrl}/distro/manjaro-based` },
-      { name: 'Linux Mint', url: `${siteUrl}/distro/mint-based` },
-      { name: 'Pop!_OS', url: `${siteUrl}/distro/popos-based` },
-      { name: 'Zorin', url: `${siteUrl}/distro/zorin-based` },
-      { name: 'Parrot', url: `${siteUrl}/distro/parrot-based` },
-      { name: 'EndeavourOS', url: `${siteUrl}/distro/endeavouros-based` },
-      { name: 'Garuda', url: `${siteUrl}/distro/garuda-based` },
-      { name: 'Nobara', url: `${siteUrl}/distro/nobara-based` },
-    ],
-    [siteUrl],
-  )
-  const structuredData = useMemo(
-    () => [
-      createCollectionPageSchema({
-        description: messages.chooserPage.seoDescription,
-        name: messages.chooserPage.title,
-        url: `${siteUrl}/get-started`,
-      }),
-      createBreadcrumbSchema([
-        { name: 'Lilite', url: `${siteUrl}/` },
-        { name: messages.chooserPage.title, url: `${siteUrl}/get-started` },
-      ]),
-      createItemListSchema({
-        items: distroItems,
-        name: messages.chooserPage.title,
-        url: `${siteUrl}/get-started`,
-      }),
-    ],
-    [distroItems, messages.chooserPage.seoDescription, messages.chooserPage.title, siteUrl],
-  )
+  const cachyosLogo = 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/cachyos-linux.svg'
 
   useSEO({
     title: messages.chooserPage.seoTitle,
@@ -92,13 +53,9 @@ export function DistroChooserPage() {
         as="h1"
       />
       <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border bg-card/70 p-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center">
-        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">
-          {messages.chooserPage.totalFamiliesBadge}
-        </span>
-        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">
-          {messages.chooserPage.packageManagersBadge}
-        </span>
-        <span>{messages.chooserPage.summaryNote}</span>
+        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">16 distro families</span>
+        <span className="rounded-full border bg-background px-2 py-1 text-xs font-medium text-foreground">apt / pacman / yay / dnf / zypper / apk</span>
+        <span>Pick once, generate clean commands instantly.</span>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <DistroCard
